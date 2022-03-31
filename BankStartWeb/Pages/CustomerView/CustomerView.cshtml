@@ -1,0 +1,20 @@
+﻿@page
+@model BankStartWeb.Pages.CustomerView.CustomerViewModel
+@{
+}
+
+<h2>Kund Id: @Model.Id</h2>
+<table class="table">
+    <tr>
+        <th>Föramn</th>
+        <th>Efternamn</th>
+        <th>Adress</th>
+    </tr>
+    <tr>
+        <td>@Model.Givenname</td>
+        <td>@Model.Surname</td>
+        <td>@Model.Streetaddress</td>
+    </tr>
+
+
+</table>

@@ -1,0 +1,26 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<table class="table">
+    <tr>
+        <th>Totalt antal kunder</th>
+        <th>Totalt antal konton</th>
+        <th>Total summa konton</th>
+    </tr>
+     <tr>
+        <td>@Model.AntalKunder</td>
+        <td>@Model.AntalKonton</td>
+        <td>@Model.TotalSummaKonton kr</td>
+    </tr>
+</table>
+
+@*Form skriv in id så får man upp kund*@
+
+<form method="post" action="">
+Kund Id:<br />
+<input type="number" name="Inputcustid" id="Inputcustid" value="@Model.Inputcustid"/><br/>
+<input type="submit" value="Skicka"/>
+</form>
