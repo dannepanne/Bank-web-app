@@ -20,7 +20,7 @@
 @*Form skriv in id så får man upp kund*@
 
 <form method="post" action="">
-Kund Id:<br />
-<input type="number" name="Inputcustid" id="Inputcustid" value="@Model.Inputcustid"/><br/>
+Sök kund på Id:<br />
+<input type="number" min="1" max="@Model.AntalKunder" name="Inputcustid" id="Inputcustid" value="@Model.Inputcustid"/><br/>
 <input type="submit" value="Skicka"/>
 </form>

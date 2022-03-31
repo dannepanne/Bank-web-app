@@ -1,0 +1,30 @@
+﻿@page
+@model BankStartWeb.Pages.CustomerView.CustomerViewAllModel
+@{
+}
+<form method="GET">
+    <input asp-for="@Model.CustSearch"/>
+    <input type="submit" value="Sök"/>
+
+</form>
+
+<table class="table">
+    <tr>
+        <th>Customer ID</th>
+        <th>Customer First Name</th>
+        <th>Customer Surname</th>
+        <th>Customer Email<a asp-page="/CustomerView/CustomerViewAll" asp-route-col="email" asp-route-custSearch="@Model.CustSearch" asp-route-order="asc"><i class='bx bx-sort-a-z' ></i></a>
+        <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="email" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
+    </tr>
+    @foreach(var cust in Model.CustomersList)
+    {
+        <tr>
+            <td><a asp-page="/CustomerView/CustomerViewSingle" asp-route-custId="@cust.Id">@cust.Id</a></td>
+            <td>@cust.FirstName</td>
+            <td>@cust.LastName</td>
+            <td>@cust.Email</td>
+        </tr>
+    }
+
+
+</table>
