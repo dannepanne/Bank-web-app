@@ -10,11 +10,17 @@
 
 <table class="table">
     <tr>
-        <th>Customer ID</th>
-        <th>Customer First Name</th>
-        <th>Customer Surname</th>
-        <th>Customer Email<a asp-page="/CustomerView/CustomerViewAll" asp-route-col="email" asp-route-custSearch="@Model.CustSearch" asp-route-order="asc"><i class='bx bx-sort-a-z' ></i></a>
-        <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="email" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
+        <th>Customer ID<a asp-page="/CustomerView/CustomerViewAll" asp-route-col="Id" asp-route-custSearch="@Model.CustSearch" asp-route-order="asc"><i class='bx bx-sort-a-z' ></i></a>
+        <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="Id" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
+        
+        <th>Customer First Name<a asp-page="/CustomerView/CustomerViewAll" asp-route-col="Givenname" asp-route-custSearch="@Model.CustSearch" asp-route-order="asc"><i class='bx bx-sort-a-z' ></i></a>
+        <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="Givenname" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
+        
+        <th>Customer Surname<a asp-page="/CustomerView/CustomerViewAll" asp-route-col="Surname" asp-route-custSearch="@Model.CustSearch" asp-route-order="asc"><i class='bx bx-sort-a-z' ></i></a>
+        <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="Surname" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
+        
+        <th>Customer Email<a asp-page="/CustomerView/CustomerViewAll" asp-route-col="EmailAddress" asp-route-custSearch="@Model.CustSearch" asp-route-order="asc"><i class='bx bx-sort-a-z' ></i></a>
+        <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="EmailAddress" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
     </tr>
     @foreach(var cust in Model.CustomersList)
     {
@@ -26,5 +32,16 @@
         </tr>
     }
 
+    <tr>
+        @if(Model.PageNo > 1)
+        {
+            <td><a asp-page="/CustomerView/CustomerViewAll" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder" asp-route-searchWord="@Model.CustSearch" asp-route-pageno="@(Model.PageNo-1)">Prev</a></td>
+        }      
+        <td>Current page @Model.PageNo of @Model.TotalPageCount</td>
 
+        @if(Model.PageNo != Model.TotalPageCount)
+        {
+        <td><a asp-page="/CustomerView/CustomerViewAll" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder" asp-route-searchWord="@Model.CustSearch" asp-route-pageno="@(Model.PageNo+1)">Next</a></td>
+        }
+    </tr>
 </table>

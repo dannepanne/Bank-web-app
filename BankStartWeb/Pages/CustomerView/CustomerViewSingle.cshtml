@@ -14,6 +14,20 @@
         <td>@Model.Surname</td>
         <td>@Model.Streetaddress</td>
     </tr>
+</table>
 
-
+<table class="table">
+    <tr>
+        <th>Kontonummer</th>
+        <th>Kontotyp</th>
+        <th>Saldo</th>
+    </tr>
+    @foreach(var item in Model.Accounts)
+    {
+    <tr>
+        <td><a asp-page="/AccountView/AccountViewSingle" asp-route-accId="@item.Id">@item.Id</a></td>
+        <td>@item.AccountType</td>
+        <td>@item.Balance</td>
+    </tr>
+    }
 </table>

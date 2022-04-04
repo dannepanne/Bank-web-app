@@ -1,4 +1,5 @@
 using BankStartWeb.Data;
+using BankStartWeb.Infrastrucure.Paging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,13 @@ namespace BankStartWeb.Pages.CustomerView
         public string CustSearch { get; set; }
         public List<CustomerListView> CustomersList { get; set; }
 
+        public int PageNo { get; set; }
+        public int TotalPageCount { get; set; }
+
+
+        public string SortOrder { get; set; }
+        public string SortCol { get; set; }
+
         public class CustomerListView
         {
             public int Id { get; set; }
@@ -28,21 +36,30 @@ namespace BankStartWeb.Pages.CustomerView
 
         }
 
-        public void OnGet(string col, string order, string custSearch)
+        public void OnGet(string col ="Id", string order = "asc", int pageno = 1, string custSearch ="")
         {
+
+            PageNo = pageno;
+            SortCol = col;
+            SortOrder = order;
+
             CustSearch = custSearch;
             var c = _applicationdDbContext.Customers.AsQueryable();
 
+            c = c.OrderBy(col, order == "asc" ? ExtensionMethods.QuerySortOrder.Asc : ExtensionMethods.QuerySortOrder.Desc);
             if (!string.IsNullOrEmpty(CustSearch))
             {
                 c = c.Where(cust => cust.Givenname.Contains(CustSearch) || cust.Surname.Contains(CustSearch));
+            }
 
-            }
-            if (col == "email")
-            {
-                if (order == "asc") c = c.OrderBy(cus => cus.EmailAddress);
-                else c = c.OrderByDescending(cus => cus.EmailAddress);
-            }
+            //if (col == "email")
+            //{
+            //    if (order == "asc") c = c.OrderBy(cus => cus.EmailAddress);
+            //    else c = c.OrderByDescending(cus => cus.EmailAddress);
+            //}
+
+            var pageResult = c.GetPaged(PageNo, 20);
+            TotalPageCount = pageResult.PageCount;
 
             CustomersList = c.Select(x => new CustomerListView
             {

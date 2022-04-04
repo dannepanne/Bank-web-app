@@ -1,0 +1,26 @@
+﻿@page
+@model BankStartWeb.Pages.AccountView.AccountViewSingleModel
+@{
+}
+
+<h1>Account ID: @Model.accountId</h1>
+
+<table class="table">
+    <tr>
+        <th>Type</th>
+        <th>Operation</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>New balance</th>
+    </tr>
+    @foreach(var item in Model.transactions)
+    {
+    <tr>
+        <th>@item.Type</th>
+        <th>@item.Operation</th>
+        <th>@item.Date</th>
+        <th>@item.Amount</th>
+        <th>@item.NewBalance</th>
+    </tr>
+    }
+</table>
