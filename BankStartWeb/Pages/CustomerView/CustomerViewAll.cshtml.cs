@@ -52,21 +52,16 @@ namespace BankStartWeb.Pages.CustomerView
                 c = c.Where(cust => cust.Givenname.Contains(CustSearch) || cust.Surname.Contains(CustSearch));
             }
 
-            //if (col == "email")
-            //{
-            //    if (order == "asc") c = c.OrderBy(cus => cus.EmailAddress);
-            //    else c = c.OrderByDescending(cus => cus.EmailAddress);
-            //}
 
             var pageResult = c.GetPaged(PageNo, 20);
             TotalPageCount = pageResult.PageCount;
 
-            CustomersList = c.Select(x => new CustomerListView
+            CustomersList = pageResult.Results.Select(c => new CustomerListView
             {
-                Id = x.Id,
-                FirstName = x.Givenname,
-                LastName = x.Surname,
-                Email = x.EmailAddress
+                Id = c.Id,
+                FirstName = c.Givenname,
+                LastName = c.Surname,
+                Email = c.EmailAddress
             }).ToList();
 
         }
