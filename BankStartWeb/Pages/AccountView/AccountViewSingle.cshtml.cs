@@ -13,19 +13,20 @@ namespace BankStartWeb.Pages.AccountView
         {
             _context = context;
         }
-    
+        
+        
         public List<Transaction> transactions { get; set; }
         public int accountId { get; set; }
         public string customerName { get; set; }
 
         public void OnGet(int accId)
         {
-
-            //Account currentAccount = new Account();
+            //var currentAccount = _context.Customers.Include(x=>x.Accounts).ThenInclude(x=>x.Transactions).First(x => x.Id == accId);
             var currentAccount = _context.Accounts.Include(x => x.Transactions).First(x => x.Id == accId);
             transactions = currentAccount.Transactions;
             accountId = currentAccount.Id;
 
         }
+
     }
 }

@@ -1,4 +1,5 @@
 using BankStartWeb.Data;
+using BankStartWeb.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,7 @@ namespace BankStartWeb.Pages.CustomerView
 {
     public class CustomerViewSingleModel : PageModel
     {
-        
+            public decimal AccountsTotal { get; set; }
             public int Id { get; set; }
             public string Givenname { get; set; }
             public string Surname { get; set; }
@@ -16,10 +17,12 @@ namespace BankStartWeb.Pages.CustomerView
              public List<Account> Accounts { get; set; }
 
              private readonly ApplicationDbContext _context;
+        private readonly IAccountServices _accountServices;
 
-            public CustomerViewSingleModel(ApplicationDbContext context)
+        public CustomerViewSingleModel(ApplicationDbContext context, IAccountServices accountServices)
             {
                 _context = context;
+                _accountServices = accountServices;
             }
 
        
@@ -35,6 +38,7 @@ namespace BankStartWeb.Pages.CustomerView
                 Surname = currentCustomer.Surname;
                 Streetaddress = currentCustomer.Streetaddress;
                 Accounts = currentCustomer.Accounts;
+                AccountsTotal = _accountServices.AccTotalAmount(Accounts);
             }
         
     }
