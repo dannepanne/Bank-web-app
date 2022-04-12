@@ -1,11 +1,12 @@
 ﻿using BankStartWeb.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BankStartWeb.Services
 {
     public class AccountServices : IAccountServices
     {
 
-        public bool EnoughBalance(Account acc, int withdraw)
+        private bool TransferOk(Account acc, int withdraw)
         {
             if (acc.Balance - withdraw >= 0)
                 return true;
@@ -31,5 +32,24 @@ namespace BankStartWeb.Services
             return sum;
         }
 
+        public List<SelectListItem> GetAccountTypes()
+        {
+            var returnlist = Enum.GetValues<AccountTypes>().Select(a => new SelectListItem
+            {
+                Text = a.ToString(),
+                Value = a.ToString()
+            }).ToList();
+
+            return returnlist;
+        }
+
+        
+
+
+        public enum Errorcode
+        {
+            ThatWentWell,
+            NotEnoughCash,
+        };
     }
 }

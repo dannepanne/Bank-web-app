@@ -48,7 +48,7 @@
 
              <div class="form-group">
                 <label asp-for="NationalId">Personnummer</label>
-                <input class="form-control" asp-for="NationalId">
+                <input class="form-control" asp-for="NationalId" maxlength="12">
                 <span asp-validation-for="NationalId" class="field-validation-error"></span>
             </div>
 
@@ -67,12 +67,19 @@
 
             <div class="form-group">
                 <label asp-for="Birthday">Födelsedag</label>
-                <input class="form-control" asp-for="Birthday">
+                <input class="form-control" asp-for="Birthday" value="1900-01-01">
                 <span asp-validation-for="Birthday" class="field-validation-error"></span>
             </div>
 
+            <div class="form-group">
+                <label asp-for="CustAccountType">Välj kontotyp för första kontot</label>
+                <select class="form-control" asp-for="CustAccountType" asp-items="@Model.AllAccountTypes" >
+                </select>
+                <span asp-validation-for="CustAccountType" class="field-validation-error"></span>
+            </div>
 
-            <a class="btn btn-primary" type="submit">Registrera ny kund</a>
+
+            <button class="btn btn-primary" type="submit">Registrera ny kund</button>
 
         </form>
 
