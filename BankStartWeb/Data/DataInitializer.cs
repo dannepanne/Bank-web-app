@@ -22,7 +22,46 @@ public class DataInitializer
     {
         _dbContext.Database.Migrate();
         SeedCustomers();
+
+        SeedRoles();
+        SeedUsers();
     }
+
+    private void SeedUsers()
+    {
+        CreateUserIfNotExists("danne@hotmail.com", "Kalas82!", new[] { "Cashier" });
+        CreateUserIfNotExists("danneeeee@hotmail.com", "Kalas82!", new[] { "Admin" });
+        CreateUserIfNotExists("stefan.holmberg@systementor.se", "Hejsan123#", new[] { "Admin" });
+        CreateUserIfNotExists("stefan.holmberg@customer.banken.se", "Hejsan123#", new[] { "Cashier" });
+
+    }
+
+    private void CreateUserIfNotExists(string email, string password, string[] roles)
+    {
+        if (_userManager.FindByEmailAsync(email).Result != null) return;
+
+        var user = new IdentityUser { UserName = email, Email = email, EmailConfirmed = true };
+
+
+        _userManager.CreateAsync(user, password).Wait();
+        _userManager.AddToRolesAsync(user, roles).Wait();
+    }
+
+
+    private void SeedRoles()
+    {
+        CreateRoleIfNotExists("Admin");
+        CreateRoleIfNotExists("Cashier");
+    }
+
+    private void CreateRoleIfNotExists(string rolename)
+    {
+        if (_dbContext.Roles.Any(e => e.Name == rolename))
+            return;
+        _dbContext.Roles.Add(new IdentityRole { Name = rolename, NormalizedName = rolename });
+        _dbContext.SaveChanges();
+    }
+
 
     private void SeedCustomers()
     {
@@ -83,7 +122,7 @@ public class DataInitializer
         }
 
 
-        else 
+        else
         {
             var testUser = new Faker<Customer>("fi")
                 .StrictMode(false)
@@ -103,12 +142,12 @@ public class DataInitializer
             person = testUser.Generate(1).First();
         }
 
-        for (int i = 0; i < random.Next(1, 5);i++)
+        for (int i = 0; i < random.Next(1, 5); i++)
         {
             person.Accounts.Add(GenerateAccount());
         }
 
-        
+
 
 
         return person;
@@ -117,7 +156,7 @@ public class DataInitializer
 
     private Account GenerateAccount()
     {
-        string[] accountType = {"Personal", "Checking", "Savings"};
+        string[] accountType = { "Personal", "Checking", "Savings" };
         var testUser = new Faker<Account>()
             .StrictMode(false)
             .RuleFor(e => e.Id, f => 0)
@@ -154,7 +193,7 @@ public class DataInitializer
                 account.Balance = account.Balance + tran.Amount;
                 if (r < 20)
                     tran.Operation = "Deposit cash";
-                else if(r < 66)
+                else if (r < 66)
                     tran.Operation = "Salary";
                 else
                     tran.Operation = "Transfer";

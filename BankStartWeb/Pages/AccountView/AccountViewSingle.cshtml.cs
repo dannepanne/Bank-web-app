@@ -1,5 +1,4 @@
 using BankStartWeb.Data;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,8 +12,8 @@ namespace BankStartWeb.Pages.AccountView
         {
             _context = context;
         }
-        
-        
+
+
         public List<Transaction> transactions { get; set; }
         public int accountId { get; set; }
         public string customerName { get; set; }

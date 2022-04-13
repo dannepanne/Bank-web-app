@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace BankStartWeb.Pages.CreateEditCustomer
+namespace BankStartWeb.Pages.Admin
 {
-    public class EditCustomerModel : PageModel
+    public class ManageRolesModel : PageModel
     {
         public void OnGet()
         {

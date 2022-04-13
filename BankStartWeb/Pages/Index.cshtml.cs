@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BankStartWeb.Pages
 {
+    //[Authorize]
     public class IndexModel : PageModel
     {
         [BindProperty]
@@ -16,7 +17,7 @@ namespace BankStartWeb.Pages
             _applicationDbContext = applicationDbContext;
             _logger = logger;
         }
-      
+
         public int AntalKunder { get; set; }
         public decimal TotalSummaKonton { get; set; }
         public int AntalKonton { get; set; }
@@ -30,7 +31,7 @@ namespace BankStartWeb.Pages
         public IActionResult OnPost()
         {
             int custId = Inputcustid;
-            return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId }) ;
+            return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId });
 
 
         }

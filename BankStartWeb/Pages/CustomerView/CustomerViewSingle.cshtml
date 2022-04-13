@@ -37,3 +37,6 @@
         <th>@Model.AccountsTotal</th>   
     </tr>
 </table>
+
+
+<button class="btn btn-danger"><a asp-page="/AccountView/CreateAccount" asp-route-custId="@Model.Id">Skapa ett nytt konto för @Model.Givenname @Model.Surname</a></button>

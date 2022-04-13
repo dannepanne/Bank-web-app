@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
 namespace BankStartWeb.Pages.CreateEditCustomer
 {
@@ -34,6 +33,7 @@ namespace BankStartWeb.Pages.CreateEditCustomer
         public string City { get; set; }
         [BindProperty]
         [Required]
+        [StringIsNumbers(ErrorMessage = "Endast siffror i postnumret")]
         public string Zipcode { get; set; }
 
         public string CountryCode { get; set; }
@@ -41,11 +41,12 @@ namespace BankStartWeb.Pages.CreateEditCustomer
         [StringLength(13)]
         [MinLength(12, ErrorMessage = "Du måste skriva in personnummer, 12 siffror")]
         [Required]
-        [StringIsNumbers(ErrorMessage ="Endast siffror i personnummret")]
-        public string NationalId { get; set; } 
+        [StringIsNumbers(ErrorMessage = "Endast siffror i personnummret")]
+        public string NationalId { get; set; }
         public int TelephoneCountryCode { get; set; }
         [BindProperty]
         [Required]
+        [StringIsNumbers(ErrorMessage = "Endast siffror i telefonnummret")]
         public string Telephone { get; set; }
         [BindProperty]
         [Required]
@@ -95,8 +96,8 @@ namespace BankStartWeb.Pages.CreateEditCustomer
             if (land == "Sverige")
             {
                 CountryCode = "SE";
-                TelephoneCountryCode = 46;                  
-                    }
+                TelephoneCountryCode = 46;
+            }
             else if (land == "Norge")
             {
                 CountryCode = "NO";
@@ -112,12 +113,12 @@ namespace BankStartWeb.Pages.CreateEditCustomer
 
         public IActionResult OnPost()
         {
-            
-                SetCountryCodeNumber(CountryId);
-                
-            
 
-            
+            SetCountryCodeNumber(CountryId);
+
+
+
+
             if (ModelState.IsValid)
             {
                 FixPersId(NationalId);
@@ -135,15 +136,15 @@ namespace BankStartWeb.Pages.CreateEditCustomer
                     newcust.EmailAddress = EmailAddress;
                     newcust.NationalId = NationalId;
                     newcust.Accounts.Add(new Account() { AccountType = CustAccountType, Created = DateTime.Now, Balance = 0, Transactions = new List<Transaction>() });
-                    //_context.Customers.Add(new Customer());
-                    //_context.SaveChanges();
+                    _context.Customers.Add(new Customer());
+                    _context.SaveChanges();
                     return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = newcust.Id });
 
                 }
 
                 return Page();
 
-             
+
             }
 
             return Page();
@@ -151,17 +152,17 @@ namespace BankStartWeb.Pages.CreateEditCustomer
 
 
         public void FixPersId(string personId)
-        {   
+        {
 
-                List<string> stringList = new List<string>();
-                foreach (var item in personId)
-                {
-                    stringList.Add(item.ToString());
-                }
-                
-                stringList.Insert(8, "-");
+            List<string> stringList = new List<string>();
+            foreach (var item in personId)
+            {
+                stringList.Add(item.ToString());
+            }
 
-                NationalId = String.Join("", stringList);
+            stringList.Insert(8, "-");
+
+            NationalId = String.Join("", stringList);
 
         }
     }

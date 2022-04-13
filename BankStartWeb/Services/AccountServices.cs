@@ -20,7 +20,7 @@ namespace BankStartWeb.Services
             if (operation == "in")
                 sum = decacc1 + decacc2;
             else if (operation == "out")
-                sum= decacc1 - decacc2;
+                sum = decacc1 - decacc2;
             else
                 sum = 0;
             return sum;
@@ -43,7 +43,7 @@ namespace BankStartWeb.Services
             return returnlist;
         }
 
-        
+
 
 
         public enum Errorcode

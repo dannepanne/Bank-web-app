@@ -3,7 +3,7 @@
     public enum AccountTypes
     {
         Savings,
-        Personal, 
+        Personal,
         Checking
     }
 }

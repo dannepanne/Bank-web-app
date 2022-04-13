@@ -1,5 +1,4 @@
 using BankStartWeb.Data;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,12 +13,13 @@ namespace BankStartWeb.Pages.AccountView
             _context = context;
         }
 
+        public string TransactionType { get; set; }
         public int ToAccountId { get; set; }
         public int FromAccountId { get; set; }
         public int TransferSum { get; set; }
-        public string Type { get; set; }       
+        public string Type { get; set; }
         public string Operation { get; set; }
-        public DateTime Date { get; set; }       
+        public DateTime Date { get; set; }
         public decimal NewBalance { get; set; }
 
 

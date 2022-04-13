@@ -11,9 +11,9 @@ namespace BankStartWeb.Services
 
         decimal AccTotalAmount(List<Account> accList);
     }
-    
 
-   
+
+
 }
 
 

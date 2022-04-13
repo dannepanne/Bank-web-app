@@ -2,6 +2,27 @@
 @model BankStartWeb.Pages.AccountView.TransactionModel
 @{
 }
+<h1>Ny transaktion</h1>
+
+
+
+ <div class="card-body">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="TransactionType">Välj typ av transaktion</label>
+                <input class="form-control" asp-for="TransactionType">
+                <span asp-validation-for="TransactionType" class="field-validation-error"></span>
+            </div>
+
+
+
+
+        </form>
+</div>
+
+
+
+
 //form med FromAccountID ToAccountID TransferSum Operation 
 
 //return page accountviewsingle på account1

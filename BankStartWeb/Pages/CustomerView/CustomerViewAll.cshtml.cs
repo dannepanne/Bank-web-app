@@ -2,7 +2,6 @@ using BankStartWeb.Data;
 using BankStartWeb.Infrastrucure.Paging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace BankStartWeb.Pages.CustomerView
 {
@@ -15,7 +14,7 @@ namespace BankStartWeb.Pages.CustomerView
             _applicationdDbContext = applicationDbContext;
         }
 
-        [BindProperty(SupportsGet =true)]
+        [BindProperty(SupportsGet = true)]
         public string CustSearch { get; set; }
         public List<CustomerListView> CustomersList { get; set; }
 
@@ -36,7 +35,7 @@ namespace BankStartWeb.Pages.CustomerView
 
         }
 
-        public void OnGet(string col ="Id", string order = "asc", int pageno = 1, string custSearch ="")
+        public void OnGet(string col = "Id", string order = "asc", int pageno = 1, string custSearch = "")
         {
 
             PageNo = pageno;

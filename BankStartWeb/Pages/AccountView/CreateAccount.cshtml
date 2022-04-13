@@ -1,0 +1,49 @@
+﻿@page
+@model BankStartWeb.Pages.AccountView.CreateAccountModel
+@{
+}
+
+<h1>Väljigen välj typ av konto att lägga till kund: (@Model.Name)</h1>
+
+
+
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="CustAccountType">Välj kontotyp kontot</label>
+        <select class="form-control" asp-for="CustAccountType" asp-items="@Model.AllAccountTypes">
+        </select>
+        <span asp-validation-for="CustAccountType" class="field-validation-error"></span>
+    </div>
+
+
+    <button class="btn btn-primary" type="submit">Skapa nytt konto</button>
+    <button class="btn btn-danger"><a asp-page="/CustomerView/CustomerViewSingle" asp-route-custId="@Model.Id"></a>Avbryt och återgå till kundsidan</button>
+    
+</form>
+
+
+
+
+<h1>Nuvarande konton för @Model.Name</h1>
+<table class="table">
+    <tr>
+        <th>Kontonummer</th>
+        <th>Kontotyp</th>
+        <th>Summa på kontot</th>
+        <th>Skapat</th>
+
+    </tr>
+    @foreach (var item in @Model.Accounts)
+    {
+        
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.AccountType</td>
+            <td>@item.Balance</td>
+            <td>@item.Created</td>
+
+        </tr>
+    }
+</table>
+        }
