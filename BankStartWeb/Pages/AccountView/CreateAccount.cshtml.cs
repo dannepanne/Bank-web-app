@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace BankStartWeb.Pages.AccountView
 {
@@ -23,7 +24,7 @@ namespace BankStartWeb.Pages.AccountView
         public string Name { get; set; }
 
 
-
+        [Required]
         [BindProperty]
         public string CustAccountType { get; set; }
         public List<Account> Accounts { get; set; }
@@ -51,7 +52,10 @@ namespace BankStartWeb.Pages.AccountView
 
         public void OnPost()
         {
-            currentCustomer.Accounts.Add(new Account() { AccountType = CustAccountType, Created = DateTime.Now, Balance = 0, Transactions = new List<Transaction>() });
+            if (ModelState.IsValid)
+            {
+                currentCustomer.Accounts.Add(new Account() { AccountType = CustAccountType, Created = DateTime.Now, Balance = 0, Transactions = new List<Transaction>() });
+            }
         }
     }
 }
