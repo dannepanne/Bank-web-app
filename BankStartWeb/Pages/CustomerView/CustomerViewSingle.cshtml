@@ -38,5 +38,9 @@
     </tr>
 </table>
 
-
+<div>
 <button class="btn btn-danger"><a asp-page="/AccountView/CreateAccount" asp-route-custId="@Model.Id">Skapa ett nytt konto för @Model.Givenname @Model.Surname</a></button>
+</div>
+<div>
+    <button class="btn btn-success"><a asp-page="/AccountView/Transaction" asp-route-custId="@Model.Id">Gör en transaktion!</a></button>
+</div>

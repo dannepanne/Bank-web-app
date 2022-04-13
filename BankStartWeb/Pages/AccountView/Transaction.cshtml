@@ -6,23 +6,46 @@
 
 
 
- <div class="card-body">
+ <div class="card-body"> 
         <form method="post">
-            <div class="form-group">
+            <div class="form-group"> 
                 <label asp-for="TransactionType">Välj typ av transaktion</label>
-                <input class="form-control" asp-for="TransactionType">
+                <select class="form-control" asp-for="TransactionType" asp-items="@Model.OpType"></select>
                 <span asp-validation-for="TransactionType" class="field-validation-error"></span>
             </div>
-
-
-
-
         </form>
+        
+            <div class="form-group"> 
+                <label asp-for="AccountFrom">Väljd konto</label>
+                <select class="form-control" asp-for="AccountFrom" asp-items="@Model.CustAccounts"></select>
+                <span asp-validation-for="AccountFrom" class="field-validation-error"></span>
+            </div>
+         
+            <div class="form-group"> @*id ska gå till getelementbyid och onchange - visa eller ej*@
+                <label asp-for="AccountTo">Konto att överföra till</label>
+                <input class="form-control" asp-for="AccountTo">
+                <span asp-validation-for="AccountTo" class="field-validation-error"></span>
+            </div>
+
+             <div class="form-group"> 
+                <label asp-for="TransferSum">Summa</label>
+                <input class="form-control" asp-for="TransferSum">
+                <span asp-validation-for="TransferSum" class="field-validation-error"></span>
+            </div>
 </div>
 
 
 
+<script>>
 
+var type = document.getElementById("");
+
+
+
+
+
+
+</script>
 //form med FromAccountID ToAccountID TransferSum Operation 
 
 //return page accountviewsingle på account1
