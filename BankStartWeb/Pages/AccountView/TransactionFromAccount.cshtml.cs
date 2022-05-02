@@ -8,22 +8,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankStartWeb.Pages.AccountView
 {
-    public class TransactionModel : PageModel
+    public class TransactionFromAccountModel : PageModel
     {
-        private readonly IAccountServices _accountServices;
-        private readonly ApplicationDbContext _context;
-
-        public TransactionModel(ApplicationDbContext context, IAccountServices accountServices)
+        public TransactionFromAccountModel(ApplicationDbContext context, IAccountServices accountServices)
         {
             _accountServices = accountServices;
             _context = context;
         }
+
         
 
         [BindProperty]
         public string OperationType { get; set; }
-        [BindProperty]
-        public int AccountTo { get; set; }
+        
         [BindProperty]
         public int AccountFrom { get; set; }
         [BindProperty]
@@ -36,18 +33,23 @@ namespace BankStartWeb.Pages.AccountView
         public List<SelectListItem> CustAccounts { get; set; }
         public List<SelectListItem> OpType = new List<SelectListItem>();
 
+        private readonly IAccountServices _accountServices;
+        private readonly ApplicationDbContext _context;
+
         public void OnGet(int custId)
         {
             var currentCust = _context.Customers.Include(x => x.Accounts).First(x => x.Id == custId);
             currentCustomerView.Id = currentCust.Id;
             currentCustomerView.Name = currentCust.Givenname + " " + currentCust.Surname;
             currentCustomerView.Accounts = currentCust.Accounts;
+            SetAll();
         }
+
 
         public void OnPost(int custId)
         {
-            _accountServices.AccountTransfer(AccountTo, AccountFrom, TransferSum);
-            _context.SaveChanges();
+
+
         }
 
 
@@ -63,16 +65,27 @@ namespace BankStartWeb.Pages.AccountView
                 Value = "",
                 Text = "Välj ett konto"
             });
-           
+            SetTransactionType();
         }
 
-            
+        public void SetTransactionType()
+        {
+            OpType.Insert(0, new SelectListItem
+            {
+                Value = "",
+                Text = "Välj en transaktionstyp"
+            });
 
-
-
+            OpType.Add(new SelectListItem
+            {
+                Value = "ATM withdrawal",
+                Text = "Bankomatuttag"
+            });
+            OpType.Add(new SelectListItem
+            {
+                Value = "Payment",
+                Text = "Betalning"
+            });
+        }
     }
 }
-
-        
-        
-      

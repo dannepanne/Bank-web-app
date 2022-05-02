@@ -16,6 +16,8 @@ namespace BankStartWeb.Pages.CustomerView
 
         [BindProperty(SupportsGet = true)]
         public string CustSearch { get; set; }
+
+        
         public List<CustomerListView> CustomersList { get; set; }
 
         public int PageNo { get; set; }
@@ -32,6 +34,7 @@ namespace BankStartWeb.Pages.CustomerView
             public string LastName { get; set; }
             public DateTime BirthDay { get; set; }
             public string Email { get; set; }
+            public string City { get; set; }
 
         }
 
@@ -45,11 +48,15 @@ namespace BankStartWeb.Pages.CustomerView
             CustSearch = custSearch;
             var c = _applicationdDbContext.Customers.AsQueryable();
 
+            
+
             c = c.OrderBy(col, order == "asc" ? ExtensionMethods.QuerySortOrder.Asc : ExtensionMethods.QuerySortOrder.Desc);
             if (!string.IsNullOrEmpty(CustSearch))
             {
-                c = c.Where(cust => cust.Givenname.Contains(CustSearch) || cust.Surname.Contains(CustSearch));
+                c = c.Where(cust => cust.Givenname.Contains(CustSearch) || cust.Surname.Contains(CustSearch)|| cust.City.Contains(CustSearch));
             }
+
+            
 
 
             var pageResult = c.GetPaged(PageNo, 20);
@@ -60,7 +67,8 @@ namespace BankStartWeb.Pages.CustomerView
                 Id = c.Id,
                 FirstName = c.Givenname,
                 LastName = c.Surname,
-                Email = c.EmailAddress
+                Email = c.EmailAddress,
+                City = c.City,
             }).ToList();
 
         }

@@ -8,15 +8,9 @@
 
  <div class="card-body"> 
         <form method="post">
+            
             <div class="form-group"> 
-                <label asp-for="TransactionType">Välj typ av transaktion</label>
-                <select class="form-control" asp-for="TransactionType" asp-items="@Model.OpType"></select>
-                <span asp-validation-for="TransactionType" class="field-validation-error"></span>
-            </div>
-        </form>
-        
-            <div class="form-group"> 
-                <label asp-for="AccountFrom">Väljd konto</label>
+                <label asp-for="AccountFrom">Välj konto</label>
                 <select class="form-control" asp-for="AccountFrom" asp-items="@Model.CustAccounts"></select>
                 <span asp-validation-for="AccountFrom" class="field-validation-error"></span>
             </div>
@@ -32,20 +26,29 @@
                 <input class="form-control" asp-for="TransferSum">
                 <span asp-validation-for="TransferSum" class="field-validation-error"></span>
             </div>
+            </form>
 </div>
 
 
 
 <script>
 
-var type = document.getElementById("");
+var transavtionType = document.getElementById("TransactionType");
+var accFrom = document.getElementById("AccountFrom");
+var accTo = document.getElementById("AccountTo");
+var transferSum = document.getElementById("TransactionSum");
 
-
+onchange(Transactiontype)
+    show account to/from
+    block
 
 
 
 
 </script>
+
+
+
 //form med FromAccountID ToAccountID TransferSum Operation 
 
 //return page accountviewsingle på account1

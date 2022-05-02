@@ -13,7 +13,7 @@
         <th>Amount</th>
         <th>New balance</th>
     </tr>
-    @foreach(var item in Model.transactions)
+    @*@foreach(var item in Model.transactions)
     {
     <tr>
         <th>@item.Type</th>
@@ -22,6 +22,30 @@
         <th>@item.Amount</th>
         <th>@item.NewBalance</th>
     </tr>
-    }
+    }*@
 </table>
 
+
+
+
+
+
+<div id="currentTransactionsPartial"></div>
+
+<button onclick="fetch20more()">Tryck</button>
+
+    @section scripts{
+        <script>
+            var skip = 0;
+
+            function fetch20more() {
+                skip = skip + 20;
+                $.ajax({
+                    url: "/AccountView/GetFrom?startPos=" + skip,
+                    success: function(result) {
+                        $("#currentTransactionsPartial").append(result);
+                    }
+                });
+            }
+        </script>
+    }

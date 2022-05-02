@@ -10,6 +10,14 @@ namespace BankStartWeb.Pages.AccountView
 {
     public class CreateAccountModel : PageModel
     {
+
+        public class CustomerViewModel
+            {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public List<Account> Accounts { get; set; }
+        }
+
         private readonly IAccountServices _accountServices;
         private readonly ApplicationDbContext _context;
 
@@ -30,13 +38,13 @@ namespace BankStartWeb.Pages.AccountView
         public List<Account> Accounts { get; set; }
         public List<SelectListItem> AllAccountTypes { get; set; }
 
-        public Customer currentCustomer { get; set; }
+        public CustomerViewModel currentCustomerView { get; set; }
         public void OnGet(int custId)
         {
-            currentCustomer = _context.Customers.Include(x => x.Accounts).First(x => x.Id == custId);
-            Id = currentCustomer.Id;
-            Name = currentCustomer.Givenname + " " + currentCustomer.Surname;
-            Accounts = currentCustomer.Accounts;
+            var currentCust = _context.Customers.Include(x => x.Accounts).First(x => x.Id == custId);
+            currentCustomerView.Id = currentCust.Id;
+            currentCustomerView.Name = currentCust.Givenname + " " + currentCust.Surname;
+            currentCustomerView.Accounts = currentCust.Accounts;
             AccountsTotal = _accountServices.AccTotalAmount(Accounts);
 
             AllAccountTypes = _accountServices.GetAccountTypes();
@@ -50,11 +58,13 @@ namespace BankStartWeb.Pages.AccountView
 
 
 
-        public void OnPost()
+        public void OnPost(int custId)
         {
             if (ModelState.IsValid)
             {
+                var currentCustomer = _context.Customers.Include(x => x.Accounts).First(x => x.Id == custId);
                 currentCustomer.Accounts.Add(new Account() { AccountType = CustAccountType, Created = DateTime.Now, Balance = 0, Transactions = new List<Transaction>() });
+                _context.SaveChanges();
             }
         }
     }

@@ -15,6 +15,8 @@ Din webläsare stödjer inte ljudformatet.
 
 </form>
 
+
+
 <table class="table">
     <tr>
         <th>Customer ID<a asp-page="/CustomerView/CustomerViewAll" asp-route-col="Id" asp-route-custSearch="@Model.CustSearch" asp-route-order="asc"><i class='bx bx-sort-a-z' ></i></a>
@@ -26,6 +28,9 @@ Din webläsare stödjer inte ljudformatet.
         <th>Customer Surname<a asp-page="/CustomerView/CustomerViewAll" asp-route-col="Surname" asp-route-custSearch="@Model.CustSearch" asp-route-order="asc"><i class='bx bx-sort-a-z' ></i></a>
         <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="Surname" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
         
+        <th>Customer City<a asp-page="/CustomerView/CustomerViewAll" asp-route-col="City" asp-route-custSearch="@Model.CustSearch" asp-route-order="asc"><i class='bx bx-sort-a-z' ></i></a>
+            <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="City" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
+
         <th>Customer Email<a asp-page="/CustomerView/CustomerViewAll" asp-route-col="EmailAddress" asp-route-custSearch="@Model.CustSearch" asp-route-order="asc"><i class='bx bx-sort-a-z' ></i></a>
         <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="EmailAddress" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
     </tr>
@@ -35,6 +40,7 @@ Din webläsare stödjer inte ljudformatet.
             <td><a asp-page="/CustomerView/CustomerViewSingle" asp-route-custId="@cust.Id">@cust.Id</a></td>
             <td>@cust.FirstName</td>
             <td>@cust.LastName</td>
+            <td>@cust.City</td>
             <td>@cust.Email</td>
         </tr>
     }

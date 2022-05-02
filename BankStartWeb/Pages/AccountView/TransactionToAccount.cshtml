@@ -1,0 +1,28 @@
+﻿@page
+@model BankStartWeb.Pages.AccountView.TransactionToAccountModel
+@{
+}
+
+<div class="card-body"> 
+        <form method="post">
+            <div class="form-group"> 
+                <label asp-for="TransactionType">Välj typ av transaktion</label>
+                <select class="form-control" asp-for="TransactionType" asp-items="@Model.OpType"></select>
+                <span asp-validation-for="TransactionType" class="field-validation-error"></span>
+            </div>
+        
+        
+            <div class="form-group"> 
+                <label asp-for="AccountTo">Välj konto</label>
+                <select class="form-control" asp-for="AccountTo" asp-items="@Model.CustAccounts"></select>
+                <span asp-validation-for="AccountTo" class="field-validation-error"></span>
+            </div>
+         
+
+             <div class="form-group"> 
+                <label asp-for="TransferSum">Summa</label>
+                <input class="form-control" asp-for="TransferSum">
+                <span asp-validation-for="TransferSum" class="field-validation-error"></span>
+            </div>
+            </form>
+</div>

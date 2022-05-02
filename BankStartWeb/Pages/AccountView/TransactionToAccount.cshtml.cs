@@ -8,24 +8,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankStartWeb.Pages.AccountView
 {
-    public class TransactionModel : PageModel
+    public class TransactionToAccountModel : PageModel
     {
-        private readonly IAccountServices _accountServices;
-        private readonly ApplicationDbContext _context;
-
-        public TransactionModel(ApplicationDbContext context, IAccountServices accountServices)
+     
+        public TransactionToAccountModel(ApplicationDbContext context, IAccountServices accountServices)
         {
             _accountServices = accountServices;
             _context = context;
         }
-        
-
         [BindProperty]
         public string OperationType { get; set; }
         [BindProperty]
         public int AccountTo { get; set; }
-        [BindProperty]
-        public int AccountFrom { get; set; }
+      
         [BindProperty]
         public decimal TransferSum { get; set; }
         public string Type { get; set; } //CashDeposit osv
@@ -35,6 +30,8 @@ namespace BankStartWeb.Pages.AccountView
 
         public List<SelectListItem> CustAccounts { get; set; }
         public List<SelectListItem> OpType = new List<SelectListItem>();
+        private readonly IAccountServices _accountServices;
+        private readonly ApplicationDbContext _context;
 
         public void OnGet(int custId)
         {
@@ -42,17 +39,17 @@ namespace BankStartWeb.Pages.AccountView
             currentCustomerView.Id = currentCust.Id;
             currentCustomerView.Name = currentCust.Givenname + " " + currentCust.Surname;
             currentCustomerView.Accounts = currentCust.Accounts;
+            SetAll();
         }
 
         public void OnPost(int custId)
         {
-            _accountServices.AccountTransfer(AccountTo, AccountFrom, TransferSum);
-            _context.SaveChanges();
+           
         }
-
 
         public void SetAll()
         {
+
             CustAccounts = currentCustomerView.Accounts.Select(y => new SelectListItem
             {
                 Text = "Kontonummer: " + y.Id + " " + "Summa på konto:" + " " + y.Balance,
@@ -63,16 +60,27 @@ namespace BankStartWeb.Pages.AccountView
                 Value = "",
                 Text = "Välj ett konto"
             });
-           
+            SetTransactionType();
         }
 
-            
-
-
-
+        public void SetTransactionType()
+        {
+            OpType.Insert(0, new SelectListItem
+            {
+                Value = "",
+                Text = "Välj en transaktionstyp"
+            });
+            OpType.Add(new SelectListItem
+            {
+                Value = "Deposit cash",
+                Text = "Kontantinsättning"
+            });
+            OpType.Add(new SelectListItem
+            {
+                Value = "Salary",
+                Text = "Lön"
+            });
+           
+        }
     }
 }
-
-        
-        
-      

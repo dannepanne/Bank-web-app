@@ -1,6 +1,7 @@
 ﻿using BankStartWeb.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
+
 namespace BankStartWeb.Services
 {
     public interface IAccountServices
@@ -10,6 +11,23 @@ namespace BankStartWeb.Services
         public List<SelectListItem> GetAccountTypes();
 
         decimal AccTotalAmount(List<Account> accList);
+        public Errorcode AccountTransfer(int AccountToId, int AccountFromId, decimal TransferSum);
+
+        public Errorcode AccountWithdrawal(int AccountFromId, decimal TransferSum);
+
+        public Errorcode AccountDeposit(int AccountToId,decimal TransferSum);
+
+
+
+
+        public enum Errorcode
+        {
+            ThatWentWell,
+            NotEnoughCash,
+            IncorrectTargetId,
+            OK
+        };
+
     }
 
 

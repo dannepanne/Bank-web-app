@@ -1,5 +1,6 @@
 using BankStartWeb.Data;
 using BankStartWeb.Infrastrucure.Validation;
+using BankStartWeb.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,13 +11,16 @@ namespace BankStartWeb.Pages.CreateEditCustomer
 {
     public class EditCustomerModel : PageModel
     {
+        private readonly ICustomerServices _customerServices;
         private readonly ApplicationDbContext _context;
 
-        public EditCustomerModel(ApplicationDbContext context)
+        public EditCustomerModel(ApplicationDbContext context, ICustomerServices customerServices)
         {
+            _customerServices = customerServices;
             _context = context;
         }
-
+        
+        public int Id { get; set; }
         [Required]
         [BindProperty]
         public string Givenname { get; set; }
@@ -53,12 +57,13 @@ namespace BankStartWeb.Pages.CreateEditCustomer
         [BindProperty]
         [Required]
 
-        public Customer currentCustomer { get; set; }
+       
 
         public List<SelectListItem> AllCountries { get; set; }
         public void OnGet(int custId)
         {
-            currentCustomer = _context.Customers.Include(x => x.Accounts).First(x => x.Id == custId);
+            
+            var currentCustomer = _context.Customers.Include(x => x.Accounts).First(x => x.Id == custId);
             Givenname = currentCustomer.Givenname;
             Surname = currentCustomer.Surname;
             City = currentCustomer.City;
@@ -101,26 +106,17 @@ namespace BankStartWeb.Pages.CreateEditCustomer
             }
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(int Id)
         {
             if(ModelState.IsValid)
             {
-                currentCustomer.Givenname = Givenname;
-                currentCustomer.Surname = Surname;
-                currentCustomer.City = City;
-                currentCustomer.Zipcode = Zipcode;
-                currentCustomer.Streetaddress = Streetaddress;  
-                currentCustomer.EmailAddress = EmailAddress;    
-                currentCustomer.TelephoneCountryCode = TelephoneCountryCode;
-                currentCustomer.Country = CountryId;
-                currentCustomer.Telephone = Telephone;
-                
-                _context.SaveChanges();
 
-                return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = currentCustomer.Id });
-                //Spara till kund?
+                _customerServices.UpdateCustomer(Id, Givenname, Surname, City, Zipcode, Streetaddress, EmailAddress, CountryId, Telephone, TelephoneCountryCode);
+
+                return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = Id });
+               
             }
-            return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = currentCustomer.Id });
+            return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = Id });
 
         }
     }

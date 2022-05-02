@@ -11,6 +11,7 @@ namespace BankStartWeb.Pages.AccountView
         public AccountViewSingleModel(ApplicationDbContext context)
         {
             _context = context;
+            
         }
 
 
