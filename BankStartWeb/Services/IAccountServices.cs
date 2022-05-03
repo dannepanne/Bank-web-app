@@ -7,7 +7,7 @@ namespace BankStartWeb.Services
     public interface IAccountServices
     {
 
-        decimal AccountTransferCalculatorInOut(decimal decacc1, decimal decacc2, string operation);
+        
         public List<SelectListItem> GetAccountTypes();
 
         decimal AccTotalAmount(List<Account> accList);
@@ -16,6 +16,8 @@ namespace BankStartWeb.Services
         public Errorcode AccountWithdrawal(int AccountFromId, decimal TransferSum);
 
         public Errorcode AccountDeposit(int AccountToId,decimal TransferSum);
+
+        public Errorcode RegisterCustomerCorrect(Customer cust);
 
 
 
@@ -27,7 +29,8 @@ namespace BankStartWeb.Services
             IncorrectTargetId,
             OK,
             CantDoThat,
-            CantTransferNegativeAmount
+            CantTransferNegativeAmount,
+            No
         };
 
     }

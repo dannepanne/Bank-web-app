@@ -52,16 +52,15 @@ namespace BankStartWeb.Services
 
 
 
-        //public bool RegisterCustomerCorrect(Customer cust)
-        //{
-        //    if(_context.Customers.FirstOrDefault(c => c.Id == cust.Id) != null)
-        //    {
-
-        //        return true;
-        //    }
-        //    else
-        //    return false;
-        //}
+        public IAccountServices.Errorcode RegisterCustomerCorrect(Customer cust)
+        {
+            if(cust.Givenname !=null && cust.Surname != null && cust.Birthday != null && cust.City != null && cust.Country != null && cust.NationalId != null && cust.Streetaddress != null && cust.Zipcode != null)
+            {
+                return IAccountServices.Errorcode.OK;
+            }
+            else
+            return IAccountServices.Errorcode.No;
+        }
 
 
         public IAccountServices.Errorcode AccountTransfer(int AccountToId, int AccountFromId, decimal TransferSum)
@@ -137,14 +136,3 @@ namespace BankStartWeb.Services
 
     }
 }
-//public string OperationType { get; set; }
-//[BindProperty]
-//public int AccountTo { get; set; }
-//[BindProperty]
-//public int AccountFrom { get; set; }
-//[BindProperty]
-//public int TransferSum { get; set; }
-//public string Type { get; set; } //CashDeposit osv
-//public string TransactionType { get; set; } //Debit & Credit
-//public DateTime Date { get; set; }
-//public decimal NewBalance { get; set; }

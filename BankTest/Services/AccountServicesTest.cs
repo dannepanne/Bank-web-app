@@ -15,11 +15,16 @@ namespace BankTest.Services
     public class AccountServicesTest
     {
 
-        //[TestMethod]
-        //public void Register_Customer_Should_Return_False()
-        //{
+        [TestMethod]
+        public void Register_Customer_Should_Return_False()
+        {
+            CreateCustomer("Anders", 10);
+            var cust = _context.Customers.FirstOrDefault(e => e.Id == 1);
+            cust.City = null;
+            var result = _sut.RegisterCustomerCorrect(cust);
+            Assert.AreEqual(IAccountServices.Errorcode.No, result);
 
-        //}
+        }
         [TestMethod]
         public void Register_Customer_Should_Return_True()
         {
@@ -47,12 +52,6 @@ namespace BankTest.Services
         }
     
         
-
-        //[TestMethod]
-        //public void Account_Transfer_Should_Not_Exceed_Balance()
-        //{
-
-        //}
         [TestMethod]
         public void Account_Transfer_Cannot_Transfer_Negative_Amount()
         {
