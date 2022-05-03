@@ -45,27 +45,22 @@ namespace BankTest.Services
             var result = _context.Customers.FirstOrDefault(e => e.Id == 1);
             Assert.AreEqual(result.NationalId, "19121212-1212");
         }
-        //[TestMethod]
-        //public void Account_Transfer_Should_Return_ThatWentWell()
-        //{
-
-        //}
-        //[TestMethod]
-        //public void Account_Transfer_Should_Return_NotEnoughCash()
-        //{
-
-        //}
+    
+        
 
         //[TestMethod]
         //public void Account_Transfer_Should_Not_Exceed_Balance()
         //{
 
         //}
-        //[TestMethod]
-        //public void Account_Transfer_Cannot_Transfer_Negative_Amount()
-        //{
-
-        //}
+        [TestMethod]
+        public void Account_Transfer_Cannot_Transfer_Negative_Amount()
+        {
+            CreateAccount(500);
+            CreateAccount(500);
+            var result = _sut.AccountTransfer(2, 1, -200);
+            Assert.AreEqual(IAccountServices.Errorcode.NotEnoughCash, result);
+        }
         //[TestMethod]
         //public void Account_Transfer_Cannot_Recieve_Negative_Amount()
         //{

@@ -1,10 +1,12 @@
 using BankStartWeb.Data;
 using BankStartWeb.Infrastrucure.Paging;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BankStartWeb.Pages.CustomerView
 {
+    [Authorize]
     public class CustomerViewAllModel : PageModel
     {
         private readonly ApplicationDbContext _applicationdDbContext;

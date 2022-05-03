@@ -52,14 +52,6 @@ namespace BankStartWeb.Services
 
 
 
-        public enum Errorcode
-        {
-            ThatWentWell,
-            NotEnoughCash,
-            IncorrectTargetId,
-            OK
-        };
-
         //public bool RegisterCustomerCorrect(Customer cust)
         //{
         //    if(_context.Customers.FirstOrDefault(c => c.Id == cust.Id) != null)

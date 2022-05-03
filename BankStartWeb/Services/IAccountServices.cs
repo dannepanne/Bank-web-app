@@ -25,7 +25,8 @@ namespace BankStartWeb.Services
             ThatWentWell,
             NotEnoughCash,
             IncorrectTargetId,
-            OK
+            OK,
+            CantDoThat
         };
 
     }

@@ -25,7 +25,7 @@
     @foreach(var item in Model.Accounts)
     {
     <tr>
-        <td><a asp-page="/AccountView/AccountViewSingle" asp-route-accId="@item.Id">@item.Id</a></td>
+        <td><a asp-page="/AccountView/AccountViewSingle" asp-route-accId="@item.Id" asp-route-custId="@Model.Id">@item.Id</a></td>
         <td>@item.AccountType</td>
         <td>@item.Balance</td>
     </tr>
