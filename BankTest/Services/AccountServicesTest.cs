@@ -59,13 +59,15 @@ namespace BankTest.Services
             CreateAccount(500);
             CreateAccount(500);
             var result = _sut.AccountTransfer(2, 1, -200);
-            Assert.AreEqual(IAccountServices.Errorcode.NotEnoughCash, result);
+            Assert.AreEqual(IAccountServices.Errorcode.CantTransferNegativeAmount, result);
         }
-        //[TestMethod]
-        //public void Account_Transfer_Cannot_Recieve_Negative_Amount()
-        //{
-
-        //}
+        [TestMethod]
+        public void Account_Transfer_Cannot_Recieve_Negative_Amount()
+        {
+            CreateAccount(500);
+            var result = _sut.AccountDeposit(1, -100);
+            Assert.AreEqual(IAccountServices.Errorcode.CantTransferNegativeAmount, result);
+        }
 
         
 
@@ -138,4 +140,3 @@ namespace BankTest.Services
 
     }
 }
-//_context.Accounts.Include(a=>a.Transactions).FirstOrDefault(a=>a.Id == 1).Transactions.Any(e=>e.Amount==66996699)

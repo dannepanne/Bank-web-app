@@ -69,37 +69,47 @@ namespace BankStartWeb.Services
             var accFrom = _context.Accounts.FirstOrDefault(a => a.Id == AccountFromId);
             var accTo = _context.Accounts.FirstOrDefault(a => a.Id == AccountToId);
 
-            if (TransferFromOk(accFrom, TransferSum))
+            if (TransferSum > 0)
             {
-          
-                Transaction transFrom = new Transaction { Operation = "Transfer", Amount = TransferSum, Date = DateTime.Now, Type = "Debit", NewBalance = accFrom.Balance - TransferSum };
-                Transaction transTo = new Transaction { Operation = "Transfer", Amount = TransferSum, Date = DateTime.Now, Type = "Credit", NewBalance = accTo.Balance + TransferSum };
+                if (TransferFromOk(accFrom, TransferSum))
+                {
 
-                accFrom.Transactions.Add(transFrom);
-                accTo.Transactions.Add(transTo);
+                    Transaction transFrom = new Transaction { Operation = "Transfer", Amount = TransferSum, Date = DateTime.Now, Type = "Debit", NewBalance = accFrom.Balance - TransferSum };
+                    Transaction transTo = new Transaction { Operation = "Transfer", Amount = TransferSum, Date = DateTime.Now, Type = "Credit", NewBalance = accTo.Balance + TransferSum };
 
-                _context.SaveChanges();
-                return IAccountServices.Errorcode.ThatWentWell;
-            }
-            
+                    accFrom.Transactions.Add(transFrom);
+                    accTo.Transactions.Add(transTo);
+
+                    _context.SaveChanges();
+                    return IAccountServices.Errorcode.ThatWentWell;
+                }
                 return IAccountServices.Errorcode.NotEnoughCash;
+            }
+
+            return IAccountServices.Errorcode.CantTransferNegativeAmount;
+
         }
 
         public IAccountServices.Errorcode AccountDeposit(int AccountToId, decimal TransferSum)
         {
-            var account = _context.Accounts.FirstOrDefault(a => a.Id == AccountToId);
-            account.Balance += TransferSum;
-            var transaction = new Transaction
+            if (TransferSum > 0)
             {
-                Operation = "Deposit",
-                Amount = TransferSum,
-                Date = DateTime.Now,
-                NewBalance = account.Balance += TransferSum,
-                Type = "Credit"
-            };
-            account.Transactions.Add(transaction);
-            _context.SaveChanges();
-            return IAccountServices.Errorcode.ThatWentWell;
+                var account = _context.Accounts.FirstOrDefault(a => a.Id == AccountToId);
+                account.Balance += TransferSum;
+                var transaction = new Transaction
+                {
+                    Operation = "Deposit",
+                    Amount = TransferSum,
+                    Date = DateTime.Now,
+                    NewBalance = account.Balance += TransferSum,
+                    Type = "Credit"
+                };
+                account.Transactions.Add(transaction);
+                _context.SaveChanges();
+                return IAccountServices.Errorcode.ThatWentWell;
+            }
+
+            return IAccountServices.Errorcode.CantTransferNegativeAmount;
         }
 
         public IAccountServices.Errorcode AccountWithdrawal(int AccountFromId, decimal TransferSum)

@@ -5,9 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BankStartWeb.Pages.CreateEditCustomer
-{
+{ [Authorize(Roles = "Admin")]
     public class CreateCustomerModel : PageModel
     {
         public IAccountServices _accountServices { get; }
