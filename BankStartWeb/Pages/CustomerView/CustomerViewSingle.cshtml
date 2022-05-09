@@ -8,11 +8,25 @@
         <th>Föramn</th>
         <th>Efternamn</th>
         <th>Adress</th>
+        <th>Stad</th>
+        <th>Land</th>
+        <th>Telefonnummer</th>
+        <th>Epostadress</th>
+        <th>Födelsedag</th>
+        <th>Personnummer</th>
+
     </tr>
     <tr>
         <td>@Model.currentCustomerSingleViewModel.Givenname</td>
         <td>@Model.currentCustomerSingleViewModel.Surname</td>
         <td>@Model.currentCustomerSingleViewModel.Streetaddress</td>
+        <td>@Model.currentCustomerSingleViewModel.City</td>
+        <td>@Model.currentCustomerSingleViewModel.Country</td>
+        <td>@Model.currentCustomerSingleViewModel.Telephone</td>
+        <td>@Model.currentCustomerSingleViewModel.Email</td>
+        <td>@Model.currentCustomerSingleViewModel.Birthday</td>
+        <td>@Model.currentCustomerSingleViewModel.NatId</td>
+
     </tr>
 </table>
 
@@ -21,6 +35,9 @@
         <th>Kontonummer</th>
         <th>Kontotyp</th>
         <th>Saldo</th>
+        <th>Kontotyp</th>
+        <th>Skapat</th>
+
     </tr>
     @foreach(var item in Model.currentCustomerSingleViewModel.Accounts)
     {
@@ -28,6 +45,9 @@
         <td><a asp-page="/AccountView/AccountViewSingle" asp-route-accId="@item.Id" asp-route-custId="@Model.currentCustomerSingleViewModel.Id">@item.Id</a></td>
         <td>@item.AccountType</td>
         <td>@item.Balance</td>
+        <td>@item.AccountType</td>
+        <td>@item.Created</td>
+        
     </tr>
     }
 

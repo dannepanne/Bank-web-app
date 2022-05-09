@@ -22,7 +22,7 @@ namespace BankStartWeb.Pages.CreateEditCustomer
             _context = context;
         }
         
-        public int Id { get; set; }
+        public int custId { get; set; }
         [Required]
         [BindProperty]
         public string Givenname { get; set; }
@@ -46,7 +46,7 @@ namespace BankStartWeb.Pages.CreateEditCustomer
         public int TelephoneCountryCode { get; set; }
         [BindProperty]
         [Required]
-        [StringIsNumbers(ErrorMessage = "Endast siffror i telefonnummret")]
+        [CorrectTelephone(ErrorMessage = "Endast siffror i telefonnummret")]
         public string Telephone { get; set; }
         [BindProperty]
         [Required]
@@ -75,6 +75,7 @@ namespace BankStartWeb.Pages.CreateEditCustomer
             TelephoneCountryCode = currentCustomer.TelephoneCountryCode;
             CountryId = currentCustomer.Country;
             Telephone = currentCustomer.Telephone;
+            custId = currentCustomer.Id;
 
             SetAll();
         }
@@ -108,17 +109,18 @@ namespace BankStartWeb.Pages.CreateEditCustomer
             }
         }
 
-        public IActionResult OnPost(int Id)
+        public IActionResult OnPost(int custId)
         {
+            
             if(ModelState.IsValid)
             {
 
-                _customerServices.UpdateCustomer(Id, Givenname, Surname, City, Zipcode, Streetaddress, EmailAddress, CountryId, Telephone, TelephoneCountryCode);
+                _customerServices.UpdateCustomer(custId, Givenname, Surname, City, Zipcode, Streetaddress, EmailAddress, CountryId, Telephone, TelephoneCountryCode);
 
-                return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = Id });
+                return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId });
                
             }
-            return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = Id });
+            return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId });
 
         }
     }
