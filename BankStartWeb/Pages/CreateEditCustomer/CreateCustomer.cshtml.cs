@@ -34,7 +34,7 @@ namespace BankStartWeb.Pages.CreateEditCustomer
         public string City { get; set; }
         [BindProperty]
         [Required]
-        [StringIsNumbers(ErrorMessage = "Endast siffror i postnumret")]
+        [CorrectTelephone(ErrorMessage = "Endast siffror i postnumret")]
         public string Zipcode { get; set; }
 
         public string CountryCode { get; set; }
@@ -47,7 +47,7 @@ namespace BankStartWeb.Pages.CreateEditCustomer
         public int TelephoneCountryCode { get; set; }
         [BindProperty]
         [Required]
-        [StringIsNumbers(ErrorMessage = "Endast siffror i telefonnummret")]
+        [CorrectTelephone(ErrorMessage = "Endast siffror i telefonnummret")]
         public string Telephone { get; set; }
         [BindProperty]
         [Required]
@@ -129,6 +129,8 @@ namespace BankStartWeb.Pages.CreateEditCustomer
                     newcust.Country = CountryId;
                     newcust.Telephone = Telephone;
                     newcust.City = City;
+                    newcust.CountryCode = CountryCode;
+                    newcust.TelephoneCountryCode = TelephoneCountryCode;
                     newcust.Streetaddress = Streetaddress;
                     newcust.Zipcode = Zipcode;
                     newcust.Birthday = Birthday;
@@ -137,7 +139,7 @@ namespace BankStartWeb.Pages.CreateEditCustomer
                     newcust.EmailAddress = EmailAddress;
                     newcust.NationalId = NationalId;
                     newcust.Accounts.Add(new Account() { AccountType = CustAccountType, Created = DateTime.Now, Balance = 0, Transactions = new List<Transaction>() });
-                    _context.Customers.Add(new Customer());
+                    _context.Customers.Add(newcust);
                     _context.SaveChanges();
                     return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = newcust.Id });
 
