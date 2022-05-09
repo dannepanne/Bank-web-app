@@ -1,6 +1,7 @@
 using BankStartWeb.Data;
 using BankStartWeb.Services;
 using BankStartWeb.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankStartWeb.Pages.AccountView
 {
+    [Authorize(Roles = "Admin, Cashier")]
     public class TransactionFromAccountModel : PageModel
     {
         public TransactionFromAccountModel(ApplicationDbContext context, IAccountServices accountServices)
@@ -46,9 +48,16 @@ namespace BankStartWeb.Pages.AccountView
         }
 
 
-        public void OnPost(int custId)
+        public IActionResult OnPost()
         {
+            if (ModelState.IsValid)
+            {
+                _accountServices.AccountWithdrawal(AccountFrom, TransferSum);
+                _context.SaveChanges();
+                return RedirectToPage("/AccountView/TransactionFromAccount", new { custId = currentCustomerView.Id });
 
+            }
+            return RedirectToPage("/AccountView/TransactionFromAccount", new { custId = currentCustomerView.Id });
 
         }
 

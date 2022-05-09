@@ -33,7 +33,8 @@ Din webläsare stödjer inte ljudformatet.
             <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="City" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
 
         <th>Customer Email<a asp-page="/CustomerView/CustomerViewAll" asp-route-col="EmailAddress" asp-route-custSearch="@Model.CustSearch" asp-route-order="asc"><i class='bx bx-sort-a-z' ></i></a>
-        <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="EmailAddress" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
+            <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="EmailAddress" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
+        
     </tr>
     @foreach(var cust in Model.CustomersList)
     {
@@ -43,6 +44,11 @@ Din webläsare stödjer inte ljudformatet.
             <td>@cust.LastName</td>
             <td>@cust.City</td>
             <td>@cust.Email</td>
+            @if (User.IsInRole("Admin"))
+            {
+                <td><a asp-page="/CreateEditCustomer/EditCustomer" asp-route-custId="@cust.Id"> Redigera kund @cust.Id</a></td>
+            }
+           
         </tr>
     }
 

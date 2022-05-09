@@ -1,10 +1,12 @@
 using BankStartWeb.Data;
 using BankStartWeb.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankStartWeb.Pages.CustomerView
 {
+    [Authorize(Roles = "Admin, Cashier")]
     public class CustomerViewSingleModel : PageModel
     {
         public class CustomerViewSingleViewModel

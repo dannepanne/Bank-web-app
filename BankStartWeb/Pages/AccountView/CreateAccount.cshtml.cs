@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BankStartWeb.Pages.AccountView
 {
+    [Authorize(Roles = "Admin, Cashier")]
     public class CreateAccountModel : PageModel
     {
 

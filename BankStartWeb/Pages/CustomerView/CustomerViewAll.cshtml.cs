@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BankStartWeb.Pages.CustomerView
 {
-    
+    [Authorize(Roles = "Admin, Cashier")]
     public class CustomerViewAllModel : PageModel
     {
         private readonly ApplicationDbContext _applicationdDbContext;

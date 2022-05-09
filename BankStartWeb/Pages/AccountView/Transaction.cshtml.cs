@@ -1,6 +1,7 @@
 using BankStartWeb.Data;
 using BankStartWeb.Services;
 using BankStartWeb.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankStartWeb.Pages.AccountView
 {
+    [Authorize(Roles = "Admin, Cashier")]
     public class TransactionModel : PageModel
     {
         private readonly IAccountServices _accountServices;

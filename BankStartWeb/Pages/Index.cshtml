@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
+<img class="logo" src="media/images/logo2.png"/>
 <table class="table">
     <tr>
         <th>Totalt antal kunder</th>
@@ -22,7 +22,10 @@
 <form method="post" action="">
     Sök kund på Id:<br />
     <input type="number" min="1" max="@Model.AntalKunder" name="Inputcustid" id="Inputcustid" value="@Model.Inputcustid"/><br/>
-    <input type="submit" value="Skicka"/>
+    <div class="container">
+        <input class="buttonblue" type="submit" value="Skicka"/>
+    </div>
+    
 </form>
 
 

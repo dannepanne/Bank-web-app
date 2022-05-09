@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\site.js" />
     <None Include="wwwroot\media\audio\fanfare.wav" />
   </ItemGroup>
 
@@ -23,6 +24,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GoodToHave\GoodToHave.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\plugins\jqvmap\js\maps\" />
+    <Folder Include="wwwroot\plugins\summernote\css\" />
   </ItemGroup>
 
 </Project>

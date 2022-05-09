@@ -42,9 +42,15 @@ namespace BankStartWeb.Pages.AccountView
             SetAll();
         }
 
-        public void OnPost(int custId)
+        public IActionResult OnPost()
         {
-           
+            if (ModelState.IsValid)
+            {
+                _accountServices.AccountDeposit(AccountTo, TransferSum);
+                _context.SaveChanges();
+                return RedirectToPage("/AccountView/TransactionToAccount", new { custId = currentCustomerView.Id });
+            }
+            return RedirectToPage("/AccountView/TransactionToAccount", new { custId = currentCustomerView.Id });
         }
 
         public void SetAll()

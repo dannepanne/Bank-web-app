@@ -12,7 +12,7 @@ a {
 }
 
 .btn-primary {
-  color: #fff;
+  color: black;
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
@@ -40,7 +40,8 @@ button.accept-policy {
 }
 
 .footer {
-  position: absolute;
+    margin-top: 100px;
+  position:relative;
   bottom: 0;
   width: 100%;
   white-space: nowrap;

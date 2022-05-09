@@ -1,12 +1,15 @@
 using BankStartWeb.Data;
 using BankStartWeb.Infrastrucure.Paging;
 using BankStartWeb.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankStartWeb.Pages.AccountView
 {
+    [Authorize(Roles = "Admin, Cashier")]
+ 
     public class AccountViewSingleModel : PageModel
     {
         private readonly ApplicationDbContext _context;
