@@ -7,37 +7,45 @@
 
 
  <div class="card-body"> 
-        <form method="post">
+     <form method="post">
             
-            <div class="form-group"> 
-                <label asp-for="AccountFrom">Välj konto</label>
-                <select class="form-control" asp-for="AccountFrom" asp-items="@Model.CustAccounts"></select>
-                <span asp-validation-for="AccountFrom" class="field-validation-error"></span>
-            </div>
+         <div class="form-group"> 
+             <label asp-for="AccountFrom">Välj konto</label>
+             <select class="form-control" asp-for="AccountFrom" asp-items="@Model.CustAccounts"></select>
+             <span asp-validation-for="AccountFrom" class="field-validation-error"></span>
+         </div>
          
-            <div class="form-group"> @*id ska gå till getelementbyid och onchange - visa eller ej*@
-                <label asp-for="AccountTo">Konto att överföra till</label>
-                <input class="form-control" asp-for="AccountTo">
-                <span asp-validation-for="AccountTo" class="field-validation-error"></span>
-            </div>
+         <div class="form-group"> @*id ska gå till getelementbyid och onchange - visa eller ej*@
+             <label asp-for="AccountTo">Konto att överföra till</label>
+             <input class="form-control" asp-for="AccountTo">
+             <span asp-validation-for="AccountTo" class="field-validation-error"></span>
+         </div>
 
-             <div class="form-group"> 
-                <label asp-for="TransferSum">Summa</label>
-                <input class="form-control" asp-for="TransferSum">
-                <span asp-validation-for="TransferSum" class="field-validation-error"></span>
-            </div>
-            </form>
+         <div class="form-group"> 
+             <label asp-for="TransferSum">Summa</label>
+             <input class="form-control" asp-for="TransferSum">
+             <span asp-validation-for="TransferSum" class="field-validation-error"></span>
+         </div>
+     </form>
+     <button class="btn btn-primary" type="submit">Gör transaktion!</button>
 </div>
 
 
 
 <script>
-
-var transavtionType = document.getElementById("TransactionType");
+    radiobutton samma id två, value. eventlistener på value inte id!
+var transactionType = document.getElementById("TransactionType");
 var accFrom = document.getElementById("AccountFrom");
 var accTo = document.getElementById("AccountTo");
 var transferSum = document.getElementById("TransactionSum");
 
+
+radiobutton1.addEventListener("change", showhidefunc());
+radiobutton2.addEventListener("change", )
+showhidefunc()
+{
+
+}
 onchange(Transactiontype)
     show account to/from
     block

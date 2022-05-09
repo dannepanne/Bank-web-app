@@ -137,5 +137,21 @@ namespace BankTest.Services
             Assert.AreEqual(IAccountServices.Errorcode.NotEnoughCash, result);
         }
 
+        [TestMethod]
+        public void Account_Exists_Should_Return_Ok()
+        {
+            CreateAccount(500);
+            var result = _sut.AccountExists(1);
+            Assert.AreEqual(IAccountServices.Errorcode.ThatWentWell, result);
+        }
+
+        [TestMethod]
+        public void Account_Exists_Should_Return_IncorrectTargetId()
+        {
+            CreateAccount(500);
+            var result = _sut.AccountExists(2);
+            Assert.AreEqual(IAccountServices.Errorcode.IncorrectTargetId, result);
+        }
+
     }
 }

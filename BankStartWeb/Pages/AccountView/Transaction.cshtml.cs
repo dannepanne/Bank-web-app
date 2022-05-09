@@ -18,7 +18,8 @@ namespace BankStartWeb.Pages.AccountView
             _accountServices = accountServices;
             _context = context;
         }
-        
+
+
 
         [BindProperty]
         public string OperationType { get; set; }
@@ -30,7 +31,7 @@ namespace BankStartWeb.Pages.AccountView
         public decimal TransferSum { get; set; }
         public string Type { get; set; } //CashDeposit osv
         public string TransactionType { get; set; } //Debit & Credit
-        
+
         public CustomerTransactionViewModel currentCustomerView { get; set; }
 
         public List<SelectListItem> CustAccounts { get; set; }
@@ -46,8 +47,12 @@ namespace BankStartWeb.Pages.AccountView
 
         public void OnPost(int custId)
         {
-            _accountServices.AccountTransfer(AccountTo, AccountFrom, TransferSum);
-            _context.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                _accountServices.AccountTransfer(AccountTo, AccountFrom, TransferSum);
+                _context.SaveChanges();
+            }
+
         }
 
 
@@ -63,16 +68,15 @@ namespace BankStartWeb.Pages.AccountView
                 Value = "",
                 Text = "Välj ett konto"
             });
-           
+
         }
 
-            
+
 
 
 
     }
 }
 
-        
-        
-      
+
+

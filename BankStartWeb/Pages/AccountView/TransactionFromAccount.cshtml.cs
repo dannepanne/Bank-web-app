@@ -27,8 +27,8 @@ namespace BankStartWeb.Pages.AccountView
         public decimal TransferSum { get; set; }
         public string Type { get; set; } //CashDeposit osv
         public string TransactionType { get; set; } //Debit & Credit
-        
-        public CustomerTransactionViewModel currentCustomerView { get; set; }
+
+        public CustomerTransactionViewModel currentCustomerView = new CustomerTransactionViewModel();
 
         public List<SelectListItem> CustAccounts { get; set; }
         public List<SelectListItem> OpType = new List<SelectListItem>();

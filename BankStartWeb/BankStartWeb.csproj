@@ -21,4 +21,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GoodToHave\GoodToHave.csproj" />
+  </ItemGroup>
+
 </Project>

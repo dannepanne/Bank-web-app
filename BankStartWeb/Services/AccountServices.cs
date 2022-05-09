@@ -65,28 +65,32 @@ namespace BankStartWeb.Services
 
         public IAccountServices.Errorcode AccountTransfer(int AccountToId, int AccountFromId, decimal TransferSum)
         {
-            var accFrom = _context.Accounts.FirstOrDefault(a => a.Id == AccountFromId);
-            var accTo = _context.Accounts.FirstOrDefault(a => a.Id == AccountToId);
-
-            if (TransferSum > 0)
+            if (AccountExists(AccountToId) == IAccountServices.Errorcode.ThatWentWell)
             {
-                if (TransferFromOk(accFrom, TransferSum))
+                var accFrom = _context.Accounts.FirstOrDefault(a => a.Id == AccountFromId);
+                var accTo = _context.Accounts.FirstOrDefault(a => a.Id == AccountToId);
+
+                if (TransferSum > 0)
                 {
+                    if (TransferFromOk(accFrom, TransferSum))
+                    {
 
-                    Transaction transFrom = new Transaction { Operation = "Transfer", Amount = TransferSum, Date = DateTime.Now, Type = "Debit", NewBalance = accFrom.Balance - TransferSum };
-                    Transaction transTo = new Transaction { Operation = "Transfer", Amount = TransferSum, Date = DateTime.Now, Type = "Credit", NewBalance = accTo.Balance + TransferSum };
+                        Transaction transFrom = new Transaction { Operation = "Transfer", Amount = TransferSum, Date = DateTime.Now, Type = "Debit", NewBalance = accFrom.Balance - TransferSum };
+                        Transaction transTo = new Transaction { Operation = "Transfer", Amount = TransferSum, Date = DateTime.Now, Type = "Credit", NewBalance = accTo.Balance + TransferSum };
 
-                    accFrom.Transactions.Add(transFrom);
-                    accTo.Transactions.Add(transTo);
+                        accFrom.Transactions.Add(transFrom);
+                        accTo.Transactions.Add(transTo);
 
-                    _context.SaveChanges();
-                    return IAccountServices.Errorcode.ThatWentWell;
+                        _context.SaveChanges();
+                        return IAccountServices.Errorcode.ThatWentWell;
+                    }
+                    return IAccountServices.Errorcode.NotEnoughCash;
                 }
-                return IAccountServices.Errorcode.NotEnoughCash;
+
+                return IAccountServices.Errorcode.CantTransferNegativeAmount;
             }
 
-            return IAccountServices.Errorcode.CantTransferNegativeAmount;
-
+            return IAccountServices.Errorcode.IncorrectTargetId;
         }
 
         public IAccountServices.Errorcode AccountDeposit(int AccountToId, decimal TransferSum)
@@ -131,8 +135,17 @@ namespace BankStartWeb.Services
 
             return IAccountServices.Errorcode.ThatWentWell;
         }
-        
 
+        public IAccountServices.Errorcode AccountExists(int accId)
+        {
+            var acc = _context.Accounts.FirstOrDefault(a => a.Id == accId);
+            if (acc != null)
+            {
+                return IAccountServices.Errorcode.ThatWentWell;
+            }
+
+            return IAccountServices.Errorcode.IncorrectTargetId;
+        }
 
     }
 }

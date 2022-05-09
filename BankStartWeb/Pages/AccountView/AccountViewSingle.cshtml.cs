@@ -1,5 +1,6 @@
 using BankStartWeb.Data;
 using BankStartWeb.Infrastrucure.Paging;
+using BankStartWeb.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,10 @@ namespace BankStartWeb.Pages.AccountView
             
         }
 
+        public class CustomerTransactionView
+        {
+
+        }
 
         public List<Transaction> transactions { get; set; }
         public int accountId { get; set; }

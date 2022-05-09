@@ -7,22 +7,23 @@
 
 <table class="table" id="posts-table">
     <thead>
-    <tr>
-    <th>Type</th>
-    <th>Operation</th>
-    <th>Date</th>
-    <th>Amount</th>
-    <th>New balance</th>
-    </tr>
+        <tr>
+            <th>Type</th>
+            <th>Operation</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>New balance</th>
+        </tr>
     </thead>
     <tbody>
-
     </tbody>
-    
+
 </table>
+<div buttonmargin>
+    <a class="btn btn-info" href="javascript:fetchMore();">Visa mer</a>
+</div>
 
 
-<a class="btn btn-info" href="javascript:fetchMore();">Visa mer</a>
 
 
 <script>
@@ -38,11 +39,11 @@
                 );
     }
     document.addEventListener("DOMContentLoaded", function() {
-            fetchMore();  
+            fetchMore();
         });
 
     function tableElement(element) {
-        
+
         document.querySelector('#posts-table tbody').innerHTML +=
             `<tr>
             <td>${element.type}</td>

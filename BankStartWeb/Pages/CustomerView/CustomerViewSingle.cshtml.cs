@@ -7,14 +7,19 @@ namespace BankStartWeb.Pages.CustomerView
 {
     public class CustomerViewSingleModel : PageModel
     {
+        public class CustomerViewSingleViewModel
+        {
         public decimal AccountsTotal { get; set; }
         public int Id { get; set; }
         public string Givenname { get; set; }
         public string Surname { get; set; }
         public string Streetaddress { get; set; }
-        
+
 
         public List<Account> Accounts { get; set; }
+        }
+
+        public CustomerViewSingleViewModel currentCustomerSingleViewModel  = new CustomerViewSingleViewModel();
 
         private readonly ApplicationDbContext _context;
         private readonly IAccountServices _accountServices;
@@ -29,16 +34,14 @@ namespace BankStartWeb.Pages.CustomerView
 
         public void OnGet(int custId)
         {
-
-            //Customer currentCustomer = new Customer();
-
+            
             var currentCustomer = _context.Customers.Include(x => x.Accounts).First(x => x.Id == custId);
-            Id = currentCustomer.Id;
-            Givenname = currentCustomer.Givenname;
-            Surname = currentCustomer.Surname;
-            Streetaddress = currentCustomer.Streetaddress;
-            Accounts = currentCustomer.Accounts;
-            AccountsTotal = _accountServices.AccTotalAmount(Accounts);
+            currentCustomerSingleViewModel.Id = currentCustomer.Id;
+            currentCustomerSingleViewModel.Givenname = currentCustomer.Givenname;
+            currentCustomerSingleViewModel.Surname = currentCustomer.Surname;
+            currentCustomerSingleViewModel.Streetaddress = currentCustomer.Streetaddress;
+            currentCustomerSingleViewModel.Accounts = currentCustomer.Accounts;
+            currentCustomerSingleViewModel.AccountsTotal = _accountServices.AccTotalAmount(currentCustomerSingleViewModel.Accounts);
         }
 
     }

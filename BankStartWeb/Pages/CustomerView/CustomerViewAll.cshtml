@@ -2,12 +2,12 @@
 @model BankStartWeb.Pages.CustomerView.CustomerViewAllModel
 @{
 }
-<div style="display:none">
+@*<div style="display:none">
    <audio controls autoplay>
   <source src="/media/audio/fanfare.wav" type="audio/wav"> 
 Din webläsare stödjer inte ljudformatet.
 </audio>
-</div>
+</div>*@
 
 
 <form method="GET">
@@ -18,7 +18,7 @@ Din webläsare stödjer inte ljudformatet.
 
 
 
-<table class="table">
+<table class="table table-container1">
     <tr>
         <th>Customer ID<a asp-page="/CustomerView/CustomerViewAll" asp-route-col="Id" asp-route-custSearch="@Model.CustSearch" asp-route-order="asc"><i class='bx bx-sort-a-z' ></i></a>
         <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="Id" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
