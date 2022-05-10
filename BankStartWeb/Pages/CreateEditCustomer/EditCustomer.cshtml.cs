@@ -125,7 +125,11 @@ namespace BankStartWeb.Pages.CreateEditCustomer
                 return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId });
                
             }
-            return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId });
+
+            SetAll();
+            _toastNotification.AddErrorToastMessage("Kunde inte uppdatera " + Surname + " se över dina inmatningar.");
+            return Page();
+            
 
         }
     }

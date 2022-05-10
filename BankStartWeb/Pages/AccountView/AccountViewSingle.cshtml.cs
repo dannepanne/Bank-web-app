@@ -32,9 +32,8 @@ namespace BankStartWeb.Pages.AccountView
 
         public void OnGet(int accId, int custId)
         {
-            //var currentAccount = _context.Customers.Include(x=>x.Accounts).ThenInclude(x=>x.Transactions).First(x => x.Id == accId);
             var currentAccount = _context.Accounts.Include(x => x.Transactions).First(x => x.Id == accId);
-            transactions = currentAccount.Transactions;
+            transactions = currentAccount.Transactions.OrderByDescending(e=> e.Date).ToList();
             accountId = currentAccount.Id;
             customerId = custId;
             var customer = _context.Customers.FirstOrDefault(x => x.Id == custId);
@@ -46,7 +45,7 @@ namespace BankStartWeb.Pages.AccountView
         {
             var query = _context.Accounts.Where(x => x.Id == accId)
                 .SelectMany(e => e.Transactions)
-                .OrderBy(a => a.Amount);
+                .OrderByDescending(a => a.Date);
 
             var r = query.GetPaged(pageNo, 5);
 

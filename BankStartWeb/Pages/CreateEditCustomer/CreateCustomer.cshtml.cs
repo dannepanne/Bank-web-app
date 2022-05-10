@@ -58,6 +58,7 @@ namespace BankStartWeb.Pages.CreateEditCustomer
         public string EmailAddress { get; set; }
         [BindProperty]
         [Required]
+        [CorrectBirthDate(ErrorMessage = "Kunden måste vara född")]
         [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }
         [BindProperty]
