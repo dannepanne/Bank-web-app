@@ -59,16 +59,18 @@
 </table>
 
 <tr>
-<td>
-<a class="btn buttongreen" asp-page="/AccountView/CreateAccount" asp-route-custId="@Model.currentCustomerSingleViewModel.Id">Skapa ett nytt konto för @Model.currentCustomerSingleViewModel.Givenname @Model.currentCustomerSingleViewModel.Surname</a>
-</td>
-<td>
- <a class="btn buttonblue" asp-page="/AccountView/TransactionToAccount" asp-route-custId="@Model.currentCustomerSingleViewModel.Id">För över pengar från ett av dina konton</a>
-</td>
-<td>
-    <a class="btn buttonblue" asp-page="/AccountView/TransactionFromAccount" asp-route-custId="@Model.currentCustomerSingleViewModel.Id">För över pengar till ett av dina konton</a>
-</td>
-<td>
-    <a class="btn buttonblue" asp-page="/AccountView/Transaction" asp-route-custId="@Model.currentCustomerSingleViewModel.Id">Gör en transaktion mellan konton</a>
-</td>
+    <td>
+        <a class="btn buttongreen" asp-page="/AccountView/CreateAccount" asp-route-custId="@Model.currentCustomerSingleViewModel.Id">Skapa ett nytt konto för @Model.currentCustomerSingleViewModel.Givenname @Model.currentCustomerSingleViewModel.Surname</a>
+    </td>
+    <td>
+        <a class="btn buttonblue" asp-page="/AccountView/TransactionToAccount" asp-route-custId="@Model.currentCustomerSingleViewModel.Id">Gör en insättning TILL ett av dina konton</a>
+    </td>
+    <td>
+        <a class="btn buttonblue" asp-page="/AccountView/TransactionFromAccount" asp-route-custId="@Model.currentCustomerSingleViewModel.Id">Gör en överföring FRÅN ett av dina konton</a>
+    </td>
+    <td>
+        <a class="btn buttonblue" asp-page="/AccountView/Transaction" asp-route-custId="@Model.currentCustomerSingleViewModel.Id">Gör en transaktion mellan konton</a>
+    </td>
 </tr>
+
+<a class="btn btn-danger" asp-page="/Index" >Återgå till startsidan</a>

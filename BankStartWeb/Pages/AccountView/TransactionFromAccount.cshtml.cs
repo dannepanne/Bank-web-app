@@ -6,16 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 
 namespace BankStartWeb.Pages.AccountView
 {
     [Authorize(Roles = "Admin, Cashier")]
     public class TransactionFromAccountModel : PageModel
     {
-        public TransactionFromAccountModel(ApplicationDbContext context, IAccountServices accountServices)
+        public TransactionFromAccountModel(ApplicationDbContext context, IAccountServices accountServices, IToastNotification toastNotification)
         {
             _accountServices = accountServices;
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         
@@ -27,8 +29,7 @@ namespace BankStartWeb.Pages.AccountView
         public int AccountFrom { get; set; }
         [BindProperty]
         public decimal TransferSum { get; set; }
-        public string Type { get; set; } //CashDeposit osv
-        public string TransactionType { get; set; } //Debit & Credit
+       // public string Type { get; set; } //CashDeposit osv
 
         public CustomerTransactionViewModel currentCustomerView = new CustomerTransactionViewModel();
 
@@ -37,6 +38,7 @@ namespace BankStartWeb.Pages.AccountView
 
         private readonly IAccountServices _accountServices;
         private readonly ApplicationDbContext _context;
+        private readonly IToastNotification _toastNotification;
 
         public void OnGet(int custId)
         {
@@ -48,16 +50,28 @@ namespace BankStartWeb.Pages.AccountView
         }
 
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(int custId)
         {
             if (ModelState.IsValid)
             {
-                _accountServices.AccountWithdrawal(AccountFrom, TransferSum);
-                _context.SaveChanges();
-                return RedirectToPage("/AccountView/TransactionFromAccount", new { custId = currentCustomerView.Id });
+                var errorcode = _accountServices.AccountWithdrawal(AccountFrom, TransferSum, OperationType);
+                if (errorcode == IAccountServices.Errorcode.ThatWentWell)
+                {
+                    _toastNotification.AddSuccessToastMessage(errorcode.ToString() + " " +
+                                                              "Pengar överförda från konto " + AccountFrom);
+                    return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId });
+
+                }
+                else
+                {
+                    _toastNotification.AddSuccessToastMessage("Överföring från konto " + AccountFrom + " misslyckades");
+                    return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId });
+                }
 
             }
-            return RedirectToPage("/AccountView/TransactionFromAccount", new { custId = currentCustomerView.Id });
+            _toastNotification.AddAlertToastMessage("Något gick fel");
+
+            return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId });
 
         }
 

@@ -41,6 +41,7 @@
                         </li>
                     }
                     
+                    
                 </ul>
                 <partial name="_LoginPartial"/>
             </div>
@@ -67,5 +68,6 @@
 
 
 @await RenderSectionAsync("Scripts", required: false)
+@await Component.InvokeAsync("NToastNotify")
 </body>
 </html>

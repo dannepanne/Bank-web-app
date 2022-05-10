@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
+using NToastNotify;
 
 namespace BankStartWeb.Pages.AccountView
 {
@@ -22,11 +23,13 @@ namespace BankStartWeb.Pages.AccountView
 
         private readonly IAccountServices _accountServices;
         private readonly ApplicationDbContext _context;
+        private readonly IToastNotification _toastNotification;
 
-        public CreateAccountModel(ApplicationDbContext context, IAccountServices accountServices)
+        public CreateAccountModel(ApplicationDbContext context, IAccountServices accountServices, IToastNotification toastNotification)
         {
             _accountServices = accountServices;
             _context = context;
+            _toastNotification = toastNotification;
         }
         public decimal AccountsTotal { get; set; }
         //public int Id { get; set; }
@@ -37,7 +40,7 @@ namespace BankStartWeb.Pages.AccountView
         [Required]
         [BindProperty]
         public string CustAccountType { get; set; }
-        
+
         public List<SelectListItem> AllAccountTypes { get; set; }
 
         public CustomerViewModel currentCustomerView = new CustomerViewModel();
@@ -67,8 +70,10 @@ namespace BankStartWeb.Pages.AccountView
                 var currentCustomer = _context.Customers.Include(x => x.Accounts).First(x => x.Id == custId);
                 currentCustomer.Accounts.Add(new Account() { AccountType = CustAccountType, Created = DateTime.Now, Balance = 0, Transactions = new List<Transaction>() });
                 _context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage(currentCustomer.Givenname + " " + currentCustomer.Surname + " har nu ett nytt konto på banken!");
                 return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId });
             }
+            _toastNotification.AddErrorToastMessage("Kunde ej skapa ny konto på grund av fel");
             return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId });
         }
     }

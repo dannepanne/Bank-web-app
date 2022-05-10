@@ -7,19 +7,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
+using NToastNotify;
 
 namespace BankStartWeb.Pages.CreateEditCustomer
 {
     [Authorize(Roles = "Admin")]
+
     public class EditCustomerModel : PageModel
     {
         private readonly ICustomerServices _customerServices;
         private readonly ApplicationDbContext _context;
+        private readonly IToastNotification _toastNotification;
 
-        public EditCustomerModel(ApplicationDbContext context, ICustomerServices customerServices)
+        public EditCustomerModel(ApplicationDbContext context, ICustomerServices customerServices, IToastNotification toastNotification)
         {
             _customerServices = customerServices;
             _context = context;
+            _toastNotification = toastNotification;
         }
         
         public int custId { get; set; }
@@ -116,6 +120,7 @@ namespace BankStartWeb.Pages.CreateEditCustomer
             {
 
                 _customerServices.UpdateCustomer(custId, Givenname, Surname, City, Zipcode, Streetaddress, EmailAddress, CountryId, Telephone, TelephoneCountryCode);
+                _toastNotification.AddSuccessToastMessage("Lyckad uppdatering av " + Surname);
 
                 return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId });
                

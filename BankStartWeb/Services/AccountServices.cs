@@ -80,7 +80,8 @@ namespace BankStartWeb.Services
 
                         accFrom.Transactions.Add(transFrom);
                         accTo.Transactions.Add(transTo);
-
+                        accFrom.Balance = accFrom.Balance - TransferSum;
+                        accTo.Balance = accTo.Balance + TransferSum;
                         _context.SaveChanges();
                         return IAccountServices.Errorcode.ThatWentWell;
                     }
@@ -93,21 +94,22 @@ namespace BankStartWeb.Services
             return IAccountServices.Errorcode.IncorrectTargetId;
         }
 
-        public IAccountServices.Errorcode AccountDeposit(int AccountToId, decimal TransferSum)
+        public IAccountServices.Errorcode AccountDeposit(int AccountToId, decimal TransferSum, string operation)
         {
             if (TransferSum > 0)
             {
                 var account = _context.Accounts.FirstOrDefault(a => a.Id == AccountToId);
-                account.Balance += TransferSum;
+                account.Balance = account.Balance + TransferSum;
                 var transaction = new Transaction
                 {
-                    Operation = "Deposit",
+                    Operation = operation,
                     Amount = TransferSum,
                     Date = DateTime.Now,
-                    NewBalance = account.Balance += TransferSum,
+                    NewBalance = account.Balance,
                     Type = "Credit"
                 };
                 account.Transactions.Add(transaction);
+                
                 _context.SaveChanges();
                 return IAccountServices.Errorcode.ThatWentWell;
             }
@@ -115,19 +117,19 @@ namespace BankStartWeb.Services
             return IAccountServices.Errorcode.CantTransferNegativeAmount;
         }
 
-        public IAccountServices.Errorcode AccountWithdrawal(int AccountFromId, decimal TransferSum)
+        public IAccountServices.Errorcode AccountWithdrawal(int AccountFromId, decimal TransferSum, string operation)
         {
             var account = _context.Accounts.FirstOrDefault(a => a.Id == AccountFromId);
             if (account.Balance - TransferSum < 0)
                 return IAccountServices.Errorcode.NotEnoughCash;
             
-            account.Balance -= TransferSum;
+            account.Balance = account.Balance - TransferSum;
             var transaction = new Transaction
             {
-            Operation = "Withdrawal",
+            Operation = operation,
             Amount = TransferSum,
             Date = DateTime.Now,
-            NewBalance = account.Balance -= TransferSum,
+            NewBalance = account.Balance,
             Type = "Debit"
             };
             account.Transactions.Add(transaction);

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
+using NToastNotify;
 
 namespace BankStartWeb.Pages.CreateEditCustomer
 { [Authorize(Roles = "Admin")]
@@ -14,11 +15,13 @@ namespace BankStartWeb.Pages.CreateEditCustomer
         public IAccountServices _accountServices { get; }
 
         private readonly ApplicationDbContext _context;
+        private readonly IToastNotification _toastNotification;
 
-        public CreateCustomerModel(ApplicationDbContext context, IAccountServices accountServices)
+        public CreateCustomerModel(ApplicationDbContext context, IAccountServices accountServices, IToastNotification toastNotification)
         {
             _accountServices = accountServices;
             _context = context;
+            _toastNotification = toastNotification;
         }
         [Required]
         [BindProperty]
@@ -141,15 +144,17 @@ namespace BankStartWeb.Pages.CreateEditCustomer
                     newcust.Accounts.Add(new Account() { AccountType = CustAccountType, Created = DateTime.Now, Balance = 0, Transactions = new List<Transaction>() });
                     _context.Customers.Add(newcust);
                     _context.SaveChanges();
+
+                    _toastNotification.AddSuccessToastMessage(newcust.Givenname + " " + newcust.Surname + " har är bankens senaste kund och har kund id " + newcust.Id + "!");
                     return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = newcust.Id });
 
                 }
-
+                SetAll();
                 return Page();
 
 
             }
-
+            SetAll();
             return Page();
         }
 

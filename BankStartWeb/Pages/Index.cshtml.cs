@@ -1,6 +1,7 @@
 ﻿using BankStartWeb.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using NToastNotify;
 
 namespace BankStartWeb.Pages
 {
@@ -10,10 +11,12 @@ namespace BankStartWeb.Pages
         [BindProperty]
         public int Inputcustid { get; set; }
 
+        private readonly IToastNotification _toastNotification;
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly ILogger<IndexModel> _logger;
-        public IndexModel(ILogger<IndexModel> logger, ApplicationDbContext applicationDbContext)
+        public IndexModel(ILogger<IndexModel> logger, ApplicationDbContext applicationDbContext, IToastNotification toastNotification)
         {
+            _toastNotification = toastNotification;
             _applicationDbContext = applicationDbContext;
             _logger = logger;
         }
@@ -30,7 +33,14 @@ namespace BankStartWeb.Pages
         }
         public IActionResult OnPost()
         {
+            
             int custId = Inputcustid;
+            if (_applicationDbContext.Customers.FirstOrDefault(c => c.Id == custId) == null)
+            {
+                _toastNotification.AddErrorToastMessage("Kunden finns ej!");
+                return Page();
+            }
+
             return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId });
 
 

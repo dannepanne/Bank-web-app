@@ -28,6 +28,7 @@ namespace BankStartWeb.Pages.AccountView
         public List<Transaction> transactions { get; set; }
         public int accountId { get; set; }
         public string customerName { get; set; }
+        public int customerId { get; set; }
 
         public void OnGet(int accId, int custId)
         {
@@ -35,6 +36,7 @@ namespace BankStartWeb.Pages.AccountView
             var currentAccount = _context.Accounts.Include(x => x.Transactions).First(x => x.Id == accId);
             transactions = currentAccount.Transactions;
             accountId = currentAccount.Id;
+            customerId = custId;
             var customer = _context.Customers.FirstOrDefault(x => x.Id == custId);
             customerName = customer.Givenname + " " + customer.Surname;
 

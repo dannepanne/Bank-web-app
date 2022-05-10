@@ -13,9 +13,9 @@ namespace BankStartWeb.Services
         decimal AccTotalAmount(List<Account> accList);
         public Errorcode AccountTransfer(int AccountToId, int AccountFromId, decimal TransferSum);
 
-        public Errorcode AccountWithdrawal(int AccountFromId, decimal TransferSum);
+        public Errorcode AccountWithdrawal(int AccountFromId, decimal TransferSum, string operation);
 
-        public Errorcode AccountDeposit(int AccountToId,decimal TransferSum);
+        public Errorcode AccountDeposit(int AccountToId,decimal TransferSum, string operation);
 
         public Errorcode RegisterCustomerCorrect(Customer cust);
 

@@ -26,12 +26,12 @@
              <input class="form-control" asp-for="TransferSum">
              <span asp-validation-for="TransferSum" class="field-validation-error"></span>
          </div>
+         <button class="btn btn-primary" type="submit">Gör transaktion!</button>
      </form>
-     <button class="btn btn-primary" type="submit">Gör transaktion!</button>
+     
 </div>
 
-
-
+<a class="btn btn-danger" asp-route-custId="@Model.currentCustomerView.Id" asp-page="/CustomerView/CustomerViewSingle" >Avbryt</a>
 <script>
     radiobutton samma id två, value. eventlistener på value inte id!
 var transactionType = document.getElementById("TransactionType");

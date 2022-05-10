@@ -6,9 +6,9 @@
 <div class="card-body"> 
     <form method="post">
         <div class="form-group"> 
-            <label asp-for="TransactionType">Välj typ av transaktion</label>
-            <select class="form-control" asp-for="TransactionType" asp-items="@Model.OpType"></select>
-            <span asp-validation-for="TransactionType" class="field-validation-error"></span>
+            <label asp-for="OperationType">Välj typ av transaktion</label>
+            <select class="form-control" asp-for="OperationType" asp-items="@Model.OpType"></select>
+            <span asp-validation-for="OperationType" class="field-validation-error"></span>
         </div>
         
         
@@ -24,6 +24,8 @@
             <input class="form-control" asp-for="TransferSum">
             <span asp-validation-for="TransferSum" class="field-validation-error"></span>
         </div>
+        <button class="btn btn-primary" type="submit">Ta emot pengar!</button>
+
     </form>
-    <button class="btn btn-primary" type="submit">Ta emot pengar!</button>
 </div>
+<a class="btn btn-danger" asp-route-custId="@Model.currentCustomerView.Id" asp-page="/CustomerView/CustomerViewSingle" >Avbryt</a>
