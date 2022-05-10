@@ -64,7 +64,7 @@ namespace BankStartWeb.Pages.AccountView
                 }
                 else
                 {
-                    _toastNotification.AddSuccessToastMessage("Överföring från konto " + AccountFrom + " misslyckades");
+                    _toastNotification.AddErrorToastMessage(errorcode.ToString() + " Överföring från konto " + AccountFrom + " misslyckades");
                     return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId });
                 }
 

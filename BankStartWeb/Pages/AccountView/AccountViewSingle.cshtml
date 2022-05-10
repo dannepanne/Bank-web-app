@@ -8,11 +8,11 @@
 <table class="table" id="posts-table">
     <thead>
         <tr>
-            <th>Type</th>
+            <th>Datum</th>
             <th>Operation</th>
-            <th>Date</th>
-            <th>Amount</th>
-            <th>New balance</th>
+            <th>Typ</th>
+            <th>Summa</th>
+            <th>Nytt saldo</th>
         </tr>
     </thead>
     <tbody>
@@ -46,9 +46,9 @@
 
         document.querySelector('#posts-table tbody').innerHTML +=
             `<tr>
-            <td>${element.type}</td>
-            <td>${element.operation}</td>
             <td>${element.date}</td>
+            <td>${element.operation}</td>
+            <td>${element.type}</td>
             <td>${element.amount}</td>
             <td>${element.newBalance}</td>
             </tr>

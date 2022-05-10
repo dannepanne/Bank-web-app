@@ -6,7 +6,7 @@ namespace BankStartWeb.Infrastrucure.Validation
     {
         public override bool IsValid(object? value)
         {
-            var allowableChars = "0123456789- ";
+            var allowableChars = "0123456789- ()x";
             string valuestring = value.ToString();
             foreach (var c in valuestring)
             {

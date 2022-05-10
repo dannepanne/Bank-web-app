@@ -64,7 +64,8 @@ namespace BankStartWeb.Pages.AccountView
                     return RedirectToPage("/AccountView/AccountViewSingle", new { accId = AccountFrom, custId = custId });
 
                 }
-                
+                _toastNotification.AddErrorToastMessage(errorcode.ToString() + " Kunde inte genomföra överföringen");
+                return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId });
             }
             _toastNotification.AddErrorToastMessage("Kunde inte genomföra överföringen");
             return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId });
