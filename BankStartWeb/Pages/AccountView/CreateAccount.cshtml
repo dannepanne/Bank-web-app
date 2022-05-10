@@ -3,7 +3,7 @@
 @{
 }
 
-<h1>Väljigen välj typ av konto att lägga till kund: (@Model.currentCustomerView.Name)</h1>
+<h3>Väljigen välj typ av konto att lägga till kund: (@Model.currentCustomerView.Name)</h3>
 
 
 
@@ -21,11 +21,10 @@
     
 </form>
 
-    <a button class="btn buttonred" asp-page="/CustomerView/CustomerViewSingle" asp-route-custId="@Model.currentCustomerView.Id">Avbryt och återgå till kundsidan</a>
 
 
 
-<h1>Nuvarande konton för @Model.currentCustomerView.Name</h1>
+<h3>Nuvarande konton för @Model.currentCustomerView.Name</h3>
 <table class="table">
     <tr>
         <th>Kontonummer</th>
@@ -46,5 +45,6 @@
         </tr>
     }
 </table>
-        
-<a class="btn btn-danger" asp-route-custId="@Model.currentCustomerView.Id" asp-page="/AccountView/AccountViewSingle" >Avbryt</a>
+
+<a button class="btn buttonred" asp-page="/CustomerView/CustomerViewSingle" asp-route-custId="@Model.currentCustomerView.Id">Avbryt och återgå till kundsidan</a>
+
