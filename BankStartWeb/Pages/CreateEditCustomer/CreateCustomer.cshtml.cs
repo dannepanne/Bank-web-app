@@ -33,7 +33,7 @@ namespace BankStartWeb.Pages.CreateEditCustomer
         public string City { get; set; }
         [BindProperty]
         [Required]
-        [StringIsNumbers(ErrorMessage = "Endast siffror i postnumret")]
+        [CorrectZipcode(ErrorMessage = "Endast siffror i postnumret")]
         public string Zipcode { get; set; }
 
         public string CountryCode { get; set; }
