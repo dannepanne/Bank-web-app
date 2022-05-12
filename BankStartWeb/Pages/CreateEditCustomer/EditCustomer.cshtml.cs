@@ -1,12 +1,18 @@
-using System.ComponentModel.DataAnnotations;
 using BankStartWeb.Data;
 using BankStartWeb.Infrastrucure.Validation;
+using BankStartWeb.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
+using NToastNotify;
 
 namespace BankStartWeb.Pages.CreateEditCustomer
 {
+    [Authorize(Roles = "Admin")]
+
     public class EditCustomerModel : PageModel
     {
         private readonly ICustomerServices _customerServices;
@@ -62,6 +68,69 @@ namespace BankStartWeb.Pages.CreateEditCustomer
         public List<SelectListItem> AllCountries { get; set; }
         public void OnGet(int custId)
         {
+            
+            var currentCustomer = _context.Customers.Include(x => x.Accounts).First(x => x.Id == custId);
+            Givenname = currentCustomer.Givenname;
+            Surname = currentCustomer.Surname;
+            City = currentCustomer.City;
+            Zipcode = currentCustomer.Zipcode;
+            Streetaddress = currentCustomer.Streetaddress;
+            EmailAddress = currentCustomer.EmailAddress;
+            TelephoneCountryCode = currentCustomer.TelephoneCountryCode;
+            CountryId = currentCustomer.Country;
+            Telephone = currentCustomer.Telephone;
+            custId = currentCustomer.Id;
+
+            SetAll();
+        }
+        public void SetAll()
+        {
+            AllCountries = Enum.GetValues<Countries>().Select(c => new SelectListItem
+            {
+                Text = c.ToString(),
+                Value = c.ToString()
+            }).ToList();
+            
+            
+        }
+
+        public void SetCountryCodeNumber(string land)
+        {
+            if (land == "Sverige")
+            {
+                CountryCode = "SE";
+                TelephoneCountryCode = 46;
+            }
+            else if (land == "Norge")
+            {
+                CountryCode = "NO";
+                TelephoneCountryCode = 47;
+            }
+            else if (land == "Finland")
+            {
+                CountryCode = "FI";
+                TelephoneCountryCode = 48;
+            }
+        }
+
+        public IActionResult OnPost(int custId)
+        {
+            
+            if(ModelState.IsValid)
+            {
+
+                _customerServices.UpdateCustomer(custId, Givenname, Surname, City, Zipcode, Streetaddress, EmailAddress, CountryId, Telephone, TelephoneCountryCode);
+                _toastNotification.AddSuccessToastMessage("Lyckad uppdatering av " + Surname);
+
+                return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = custId });
+               
+            }
+
+            SetAll();
+            _toastNotification.AddErrorToastMessage("Kunde inte uppdatera " + Surname + " se över dina inmatningar.");
+            return Page();
+            
+
         }
     }
 }

@@ -9,5 +9,6 @@ namespace BankStartWeb.Infrastrucure.Validation
             string valuestring = value.ToString();
             return valuestring.All(Char.IsDigit);
         }
+
     }
 }

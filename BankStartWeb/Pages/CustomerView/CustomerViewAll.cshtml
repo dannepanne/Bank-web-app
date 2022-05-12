@@ -1,12 +1,13 @@
 ﻿@page
 @model BankStartWeb.Pages.CustomerView.CustomerViewAllModel
 @{
-}<div style="display:none">
+}
+@*<div style="display:none">
    <audio controls autoplay>
   <source src="/media/audio/fanfare.wav" type="audio/wav"> 
 Din webläsare stödjer inte ljudformatet.
 </audio>
-</div>
+</div>*@
 
 
 <form method="GET">
@@ -15,7 +16,9 @@ Din webläsare stödjer inte ljudformatet.
 
 </form>
 
-<table class="table">
+
+
+<table class="table table-container1">
     <tr>
         <th>Customer ID<a asp-page="/CustomerView/CustomerViewAll" asp-route-col="Id" asp-route-custSearch="@Model.CustSearch" asp-route-order="asc"><i class='bx bx-sort-a-z' ></i></a>
         <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="Id" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
@@ -26,8 +29,12 @@ Din webläsare stödjer inte ljudformatet.
         <th>Customer Surname<a asp-page="/CustomerView/CustomerViewAll" asp-route-col="Surname" asp-route-custSearch="@Model.CustSearch" asp-route-order="asc"><i class='bx bx-sort-a-z' ></i></a>
         <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="Surname" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
         
+        <th>Customer City<a asp-page="/CustomerView/CustomerViewAll" asp-route-col="City" asp-route-custSearch="@Model.CustSearch" asp-route-order="asc"><i class='bx bx-sort-a-z' ></i></a>
+            <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="City" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
+
         <th>Customer Email<a asp-page="/CustomerView/CustomerViewAll" asp-route-col="EmailAddress" asp-route-custSearch="@Model.CustSearch" asp-route-order="asc"><i class='bx bx-sort-a-z' ></i></a>
-        <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="EmailAddress" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
+            <a asp-page="/CustomerView/CustomerViewAll" asp-route-col="EmailAddress" asp-route-custSearch="@Model.CustSearch" asp-route-order="desc"><i class='bx bx-sort-z-a' ></i></a></th>
+        
     </tr>
     @foreach(var cust in Model.CustomersList)
     {
@@ -35,7 +42,13 @@ Din webläsare stödjer inte ljudformatet.
             <td><a asp-page="/CustomerView/CustomerViewSingle" asp-route-custId="@cust.Id">@cust.Id</a></td>
             <td>@cust.FirstName</td>
             <td>@cust.LastName</td>
+            <td>@cust.City</td>
             <td>@cust.Email</td>
+            @if (User.IsInRole("Admin"))
+            {
+                <td><a asp-page="/CreateEditCustomer/EditCustomer" asp-route-custId="@cust.Id"> Redigera kund @cust.Id</a></td>
+            }
+           
         </tr>
     }
 

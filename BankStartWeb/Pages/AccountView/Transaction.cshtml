@@ -6,29 +6,29 @@
 
 
 
- <div class="card-body">
-        <form method="post">
-            <div class="form-group">
-                <label asp-for="TransactionType">Välj typ av transaktion</label>
-                <input class="form-control" asp-for="TransactionType">
-                <span asp-validation-for="TransactionType" class="field-validation-error"></span>
-            </div>
+ <div class="card-body"> 
+     <form method="post">
+            
+         <div class="form-group"> 
+             <label asp-for="AccountFrom">Välj konto</label>
+             <select class="form-control" asp-for="AccountFrom" asp-items="@Model.CustAccounts"></select>
+             <span asp-validation-for="AccountFrom" class="field-validation-error"></span>
+         </div>
+         
+         <div class="form-group"> @*id ska gå till getelementbyid och onchange - visa eller ej*@
+             <label asp-for="AccountTo">Konto att överföra till</label>
+             <input class="form-control" asp-for="AccountTo">
+             <span asp-validation-for="AccountTo" class="field-validation-error"></span>
+         </div>
 
-
-
-
-        </form>
+         <div class="form-group"> 
+             <label asp-for="TransferSum">Summa</label>
+             <input class="form-control" asp-for="TransferSum">
+             <span asp-validation-for="TransferSum" class="field-validation-error"></span>
+         </div>
+         <button class="btn btn-primary" type="submit">Gör transaktion!</button>
+     </form>
+     
 </div>
 
-
-
-
-//form med FromAccountID ToAccountID TransferSum Operation 
-
-//return page accountviewsingle på account1
-
-//dropdown på accounts kopplat till den kunden som väljer
-
-//visa förändring innan den görs?
-
-//förhandsvisa kontoägare vid input kontonummer
+<a class="btn btn-danger" asp-route-custId="@Model.currentCustomerView.Id" asp-page="/CustomerView/CustomerViewSingle" >Avbryt</a>

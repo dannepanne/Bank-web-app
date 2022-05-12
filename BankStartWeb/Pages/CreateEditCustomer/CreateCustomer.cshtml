@@ -15,7 +15,7 @@
                 <span asp-validation-for="Givenname" class="field-validation-error"></span>
             </div>
 
-             <div class="form-group">
+            <div class="form-group">
                 <label asp-for="Surname">Efternamn</label>
                 <input class="form-control" asp-for="Surname">
                 <span asp-validation-for="Surname" class="field-validation-error"></span>
@@ -27,39 +27,39 @@
                 <span asp-validation-for="Streetaddress" class="field-validation-error"></span>
             </div>
 
-             <div class="form-group">
+            <div class="form-group">
                 <label asp-for="Zipcode">Postnummer</label>
                 <input class="form-control" asp-for="Zipcode">
                 <span asp-validation-for="Zipcode" class="field-validation-error"></span>
             </div>           
 
-             <div class="form-group">
+            <div class="form-group">
                 <label asp-for="City">Stad</label>
                 <input class="form-control" asp-for="City">
                 <span asp-validation-for="City" class="field-validation-error"></span>
             </div>
             
-             <div class="form-group">
+            <div class="form-group">
                 <label asp-for="CountryId">Land</label>
                 <select class="form-control" asp-for="CountryId" asp-items="@Model.AllCountries" >
                 </select>
                 <span asp-validation-for="CountryId" class="field-validation-error"></span>
             </div>
 
-             <div class="form-group">
+            <div class="form-group">
                 <label asp-for="NationalId">Personnummer</label>
                 <input class="form-control" asp-for="NationalId" maxlength="12">
                 <span asp-validation-for="NationalId" class="field-validation-error"></span>
             </div>
 
              
-             <div class="form-group">
+            <div class="form-group">
                 <label asp-for="Telephone">Telefonnummer</label>
                 <input class="form-control" asp-for="Telephone">
                 <span asp-validation-for="Telephone" class="field-validation-error"></span>
             </div>
 
-             <div class="form-group">
+            <div class="form-group">
                 <label asp-for="EmailAddress">Epostadress</label>
                 <input class="form-control" asp-for="EmailAddress">
                 <span asp-validation-for="EmailAddress" class="field-validation-error"></span>
@@ -82,6 +82,8 @@
             <button class="btn btn-primary" type="submit">Registrera ny kund</button>
 
         </form>
-
+        <button class="btn btn-danger"><a asp-page="/Index" >Avbryt och återgå till startsidan</a></button>
     </div>
 </div>
+
+<partial name="Shared/_ValidationScriptsPartial"/>

@@ -2,17 +2,31 @@
 @model BankStartWeb.Pages.CustomerView.CustomerViewSingleModel
 @{
 }
-<h2>Kund Id: @Model.Id</h2>
+<h2>Kund Id: @Model.currentCustomerSingleViewModel.Id</h2>
 <table class="table">
     <tr>
         <th>Föramn</th>
         <th>Efternamn</th>
         <th>Adress</th>
+        <th>Stad</th>
+        <th>Land</th>
+        <th>Telefonnummer</th>
+        <th>Epostadress</th>
+        <th>Födelsedag</th>
+        <th>Personnummer</th>
+
     </tr>
     <tr>
-        <td>@Model.Givenname</td>
-        <td>@Model.Surname</td>
-        <td>@Model.Streetaddress</td>
+        <td>@Model.currentCustomerSingleViewModel.Givenname</td>
+        <td>@Model.currentCustomerSingleViewModel.Surname</td>
+        <td>@Model.currentCustomerSingleViewModel.Streetaddress</td>
+        <td>@Model.currentCustomerSingleViewModel.City</td>
+        <td>@Model.currentCustomerSingleViewModel.Country</td>
+        <td>@Model.currentCustomerSingleViewModel.Telephone</td>
+        <td>@Model.currentCustomerSingleViewModel.Email</td>
+        <td>@Model.currentCustomerSingleViewModel.Birthday</td>
+        <td>@Model.currentCustomerSingleViewModel.NatId</td>
+
     </tr>
 </table>
 
@@ -21,22 +35,61 @@
         <th>Kontonummer</th>
         <th>Kontotyp</th>
         <th>Saldo</th>
+        <th>Kontotyp</th>
+        <th>Skapat</th>
+
     </tr>
-    @foreach(var item in Model.Accounts)
+    @foreach(var item in Model.currentCustomerSingleViewModel.Accounts)
     {
     <tr>
-        <td><a asp-page="/AccountView/AccountViewSingle" asp-route-accId="@item.Id">@item.Id</a></td>
+        <td><a asp-page="/AccountView/AccountViewSingle" asp-route-accId="@item.Id" asp-route-custId="@Model.currentCustomerSingleViewModel.Id">@item.Id</a></td>
         <td>@item.AccountType</td>
         <td>@item.Balance</td>
+        <td>@item.AccountType</td>
+        <td>@item.Created</td>
+        
     </tr>
     }
 
     <tr>
         <th>Totalt på konton:</th>
         <td></td>
-        <th>@Model.AccountsTotal</th>   
+        <th>@Model.currentCustomerSingleViewModel.AccountsTotal</th>   
     </tr>
 </table>
 
+<div>
 
-<button class="btn btn-danger"><a asp-page="/AccountView/CreateAccount" asp-route-custId="@Model.Id">Skapa ett nytt konto för @Model.Givenname @Model.Surname</a></button>
+</div>
+<div>
+    <a class="buttonred" asp-page="/CreateEditCustomer/EditCustomer" asp-route-custId="@Model.currentCustomerSingleViewModel.Id"> REDIGERA @Model.currentCustomerSingleViewModel.Givenname</a>
+
+</div>
+<div>
+    <a class="btn buttongreen" asp-page="/AccountView/CreateAccount" asp-route-custId="@Model.currentCustomerSingleViewModel.Id">Skapa ett NYTT konto för @Model.currentCustomerSingleViewModel.Givenname @Model.currentCustomerSingleViewModel.Surname</a>
+
+</div>
+<div>
+    <a class="btn buttonblue" asp-page="/AccountView/TransactionToAccount" asp-route-custId="@Model.currentCustomerSingleViewModel.Id">Gör en insättning TILL ett av dina konton</a>
+
+</div>
+<div>
+    <a class="btn buttonblue" asp-page="/AccountView/TransactionFromAccount" asp-route-custId="@Model.currentCustomerSingleViewModel.Id">Gör en överföring FRÅN ett av dina konton</a>
+
+</div>
+<div>
+    <a class="btn buttonblue" asp-page="/AccountView/Transaction" asp-route-custId="@Model.currentCustomerSingleViewModel.Id">Gör en transaktion MELLAN konton</a>
+
+</div>
+<div>
+    <a class="btn buttonred" asp-page="/Index" >ÅTERGÅ till startsidan</a>
+</div>
+
+
+
+
+
+
+    
+
+

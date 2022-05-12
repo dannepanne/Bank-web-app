@@ -2,3 +2,40 @@
 @model BankStartWeb.Pages.Admin.ManageRolesModel
 @{
 }
+
+<h1>Ny användare</h1>
+
+//radio button för roller, casher, admin eller both
+//input för mailadress och lösenord samt bekräftelse av lösenord.  - spara som ny användare. CRUDDA användare???
+
+
+<div class="card">
+    <div class="card-header">
+        <h1>Ny kund</h1>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="epost">Epostadress</label>
+                <input class="form-control" asp-for="epost">
+                <span asp-validation-for="epost" class="field-validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="password">Lösenord</label>
+                <input class="form-control" asp-for="password">
+                <span asp-validation-for="password" class="field-validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="password2">Lösenord igen</label>
+                <input class="form-control" asp-for="password2">
+                <span asp-validation-for="password2" class="field-validation-error"></span>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Registrera ny användare</button>
+
+        </form>
+        <button class="btn btn-danger"><a asp-page="/Index">Avbryt och återgå till startsidan</a></button>
+    </div>
+</div>

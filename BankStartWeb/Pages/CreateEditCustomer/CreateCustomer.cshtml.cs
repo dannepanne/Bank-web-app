@@ -5,19 +5,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
+using NToastNotify;
 
 namespace BankStartWeb.Pages.CreateEditCustomer
-{
+{ [Authorize(Roles = "Admin")]
     public class CreateCustomerModel : PageModel
     {
         public IAccountServices _accountServices { get; }
 
         private readonly ApplicationDbContext _context;
+        private readonly IToastNotification _toastNotification;
 
-        public CreateCustomerModel(ApplicationDbContext context, IAccountServices accountServices)
+        public CreateCustomerModel(ApplicationDbContext context, IAccountServices accountServices, IToastNotification toastNotification)
         {
             _accountServices = accountServices;
             _context = context;
+            _toastNotification = toastNotification;
         }
         [Required]
         [BindProperty]
@@ -33,7 +37,7 @@ namespace BankStartWeb.Pages.CreateEditCustomer
         public string City { get; set; }
         [BindProperty]
         [Required]
-        [CorrectZipcode(ErrorMessage = "Endast siffror i postnumret")]
+        [CorrectZipcode(ErrorMessage = "Endast siffror i postnumret, mellanslag går bra")]
         public string Zipcode { get; set; }
 
         public string CountryCode { get; set; }
@@ -46,7 +50,7 @@ namespace BankStartWeb.Pages.CreateEditCustomer
         public int TelephoneCountryCode { get; set; }
         [BindProperty]
         [Required]
-        [StringIsNumbers(ErrorMessage = "Endast siffror i telefonnummret")]
+        [CorrectTelephone(ErrorMessage = "Endast siffror i telefonnummret")]
         public string Telephone { get; set; }
         [BindProperty]
         [Required]
@@ -54,6 +58,7 @@ namespace BankStartWeb.Pages.CreateEditCustomer
         public string EmailAddress { get; set; }
         [BindProperty]
         [Required]
+        [CorrectBirthDate(ErrorMessage = "Kunden måste vara född")]
         [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }
         [BindProperty]
@@ -128,6 +133,8 @@ namespace BankStartWeb.Pages.CreateEditCustomer
                     newcust.Country = CountryId;
                     newcust.Telephone = Telephone;
                     newcust.City = City;
+                    newcust.CountryCode = CountryCode;
+                    newcust.TelephoneCountryCode = TelephoneCountryCode;
                     newcust.Streetaddress = Streetaddress;
                     newcust.Zipcode = Zipcode;
                     newcust.Birthday = Birthday;
@@ -136,17 +143,19 @@ namespace BankStartWeb.Pages.CreateEditCustomer
                     newcust.EmailAddress = EmailAddress;
                     newcust.NationalId = NationalId;
                     newcust.Accounts.Add(new Account() { AccountType = CustAccountType, Created = DateTime.Now, Balance = 0, Transactions = new List<Transaction>() });
-                    _context.Customers.Add(new Customer());
+                    _context.Customers.Add(newcust);
                     _context.SaveChanges();
+
+                    _toastNotification.AddSuccessToastMessage(newcust.Givenname + " " + newcust.Surname + " har är bankens senaste kund och har kund id " + newcust.Id + "!");
                     return RedirectToPage("/CustomerView/CustomerViewSingle", new { custId = newcust.Id });
 
                 }
-
+                SetAll();
                 return Page();
 
 
             }
-
+            SetAll();
             return Page();
         }
 

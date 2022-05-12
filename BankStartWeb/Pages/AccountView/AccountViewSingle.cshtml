@@ -3,25 +3,60 @@
 @{
 }
 
-<h1>Account ID: @Model.accountId</h1>
+<h1>Account ID: @Model.accountId som ägs av @Model.customerName</h1>
 
-<table class="table">
-    <tr>
-        <th>Type</th>
-        <th>Operation</th>
-        <th>Date</th>
-        <th>Amount</th>
-        <th>New balance</th>
-    </tr>
-    @foreach(var item in Model.transactions)
-    {
-    <tr>
-        <th>@item.Type</th>
-        <th>@item.Operation</th>
-        <th>@item.Date</th>
-        <th>@item.Amount</th>
-        <th>@item.NewBalance</th>
-    </tr>
-    }
+<table class="table" id="posts-table">
+    <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Operation</th>
+            <th>Typ</th>
+            <th>Summa</th>
+            <th>Nytt saldo</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    
 </table>
+<div class="buttonmargin">
+    <a class="btn btn-info" href="javascript:fetchMore();">Visa mer</a>
+</div>
+
+
+
+
+<script>
+    pageNo = 1;
+    function fetchMore() {
+        fetch("AccountViewSingle?handler=FetchMore&pageNo=" + pageNo + "&accId=@Model.accountId")
+            .then((response) => response.json())
+                .then((json) => {
+                        pageNo = pageNo + 1;
+                        json.items.forEach(tableElement);
+                        console.log(json)
+                    }
+                );
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+            fetchMore();
+        });
+
+    function tableElement(element) {
+
+        document.querySelector('#posts-table tbody').innerHTML +=
+            `<tr>
+            <td>${element.date}</td>
+            <td>${element.operation}</td>
+            <td>${element.type}</td>
+            <td>${element.amount}</td>
+            <td>${element.newBalance}</td>
+            </tr>
+            `;
+            console.log(element)
+    }
+
+</script>
+<a class="btn btn-danger" asp-route-custId="@Model.customerId" asp-page="/CustomerView/CustomerViewSingle" >Avbryt</a>
+
 
