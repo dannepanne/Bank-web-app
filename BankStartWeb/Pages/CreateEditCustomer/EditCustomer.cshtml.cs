@@ -1,4 +1,9 @@
+using System.ComponentModel.DataAnnotations;
+using BankStartWeb.Data;
+using BankStartWeb.Infrastrucure.Validation;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BankStartWeb.Pages.CreateEditCustomer
 {
